@@ -1,0 +1,256 @@
+{
+  "name": "IceWhale CRM Workflows",
+  "workflows": [
+    {
+      "name": "Daily Unresolved Issues Reminder",
+      "nodes": [
+        {
+          "parameters": {
+            "rule": {
+              "interval": [
+                {
+                  "field": "hours",
+                  "expression": "9"
+                }
+              ]
+            }
+          },
+          "name": "Schedule Trigger",
+          "type": "n8n-nodes-base.scheduleTrigger",
+          "typeVersion": 1,
+          "position": [250, 300]
+        },
+        {
+          "parameters": {
+            "url": "http://crm:8080/api/entries",
+            "sendQuery": true,
+            "queryParameters": {
+              "parameters": [
+                {
+                  "name": "status_tag",
+                  "value": "=待处理"
+                }
+              ]
+            }
+          },
+          "name": "Get Unresolved Issues",
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.1,
+          "position": [450, 300]
+        },
+        {
+          "parameters": {
+            "webhookUri": "={{ $env.FEISHU_WEBHOOK_URL }}",
+            "text": "=🚨 每日提醒：有 {{ $json.total }} 个问题超过3天未处理，请尽快查看！\n\n查看详情: http://crm:8080/entries"
+          },
+          "name": "Send Feishu Notification",
+          "type": "n8n-nodes-base.feishuChatMessage",
+          "typeVersion": 1,
+          "position": [650, 300]
+        }
+      ],
+      "connections": {
+        "Schedule Trigger": {
+          "main": [
+            [
+              {
+                "node": "Get Unresolved Issues",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Get Unresolved Issues": {
+          "main": [
+            [
+              {
+                "node": "Send Feishu Notification",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        }
+      },
+      "settings": {
+        "executionOrder": "v1"
+      },
+      "staticData": null,
+      "tags": []
+    },
+    {
+      "name": "New Issue Notification",
+      "nodes": [
+        {
+          "parameters": {
+            "httpMethod": "POST",
+            "path": "new-issue",
+            "responseMode": "responseNode"
+          },
+          "name": "Webhook",
+          "type": "n8n-nodes-base.webhook",
+          "typeVersion": 1,
+          "position": [250, 300]
+        },
+        {
+          "parameters": {
+            "channel": "#icewhale-issues",
+            "text": "=📥 新问题：{{ $json.body.title }}\n类型: {{ $json.body.type_tag }}\n来源: {{ $json.body.source_type }}\n链接: http://crm:8080/entries/{{ $json.body.entry_id }}"
+          },
+          "name": "Send Slack Notification",
+          "type": "n8n-nodes-base.slack",
+          "typeVersion": 2.1,
+          "position": [450, 300]
+        },
+        {
+          "parameters": {
+            "options": {}
+          },
+          "name": "Respond to Webhook",
+          "type": "n8n-nodes-base.respondToWebhook",
+          "typeVersion": 1,
+          "position": [450, 500]
+        }
+      ],
+      "connections": {
+        "Webhook": {
+          "main": [
+            [
+              {
+                "node": "Send Slack Notification",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Send Slack Notification": {
+          "main": [
+            [
+              {
+                "node": "Respond to Webhook",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        }
+      },
+      "settings": {
+        "executionOrder": "v1"
+      },
+      "staticData": null,
+      "tags": []
+    },
+    {
+      "name": "High Priority Alert",
+      "nodes": [
+        {
+          "parameters": {
+            "httpMethod": "POST",
+            "path": "high-priority",
+            "responseMode": "responseNode"
+          },
+          "name": "Webhook",
+          "type": "n8n-nodes-base.webhook",
+          "typeVersion": 1,
+          "position": [250, 300]
+        },
+        {
+          "parameters": {
+            "conditions": {
+              "options": {
+                "caseSensitive": true,
+                "leftValue": "",
+                "typeValidation": "strict"
+              },
+              "conditions": [
+                {
+                  "id": "1",
+                  "leftValue": "={{ $json.body.priority }}",
+                  "rightValue": "紧急",
+                  "operator": {
+                    "type": "string",
+                    "operation": "equals"
+                  }
+                }
+              ],
+              "combinator": "and"
+            }
+          },
+          "name": "Check Priority",
+          "type": "n8n-nodes-base.if",
+          "typeVersion": 2,
+          "position": [450, 300]
+        },
+        {
+          "parameters": {
+            "webhookUri": "={{ $env.FEISHU_WEBHOOK_URL }}",
+            "text": "=🔥 高优先级警报！\n\n标题: {{ $json.body.title }}\n类型: {{ $json.body.type_tag }}\n优先级: {{ $json.body.priority }}\n来源: {{ $json.body.source_type }}\n\n立即查看: http://crm:8080/entries/{{ $json.body.entry_id }}"
+          },
+          "name": "Send Urgent Feishu",
+          "type": "n8n-nodes-base.feishuChatMessage",
+          "typeVersion": 1,
+          "position": [650, 200]
+        },
+        {
+          "parameters": {
+            "options": {}
+          },
+          "name": "Respond to Webhook",
+          "type": "n8n-nodes-base.respondToWebhook",
+          "typeVersion": 1,
+          "position": [850, 300]
+        }
+      ],
+      "connections": {
+        "Webhook": {
+          "main": [
+            [
+              {
+                "node": "Check Priority",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Check Priority": {
+          "main": [
+            [
+              {
+                "node": "Send Urgent Feishu",
+                "type": "main",
+                "index": 0
+              }
+            ],
+            [
+              {
+                "node": "Respond to Webhook",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Send Urgent Feishu": {
+          "main": [
+            [
+              {
+                "node": "Respond to Webhook",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        }
+      },
+      "settings": {
+        "executionOrder": "v1"
+      },
+      "staticData": null,
+      "tags": []
+    }
+  ]
+}

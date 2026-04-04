@@ -137,6 +137,9 @@ def delete_entry(db: Session, entry_id: str) -> bool:
     if not db_entry:
         return False
 
+    # Delete associated edit history first
+    db.query(EditHistory).filter(EditHistory.entry_id == entry_id).delete()
+
     db.delete(db_entry)
     db.commit()
     return True
@@ -146,12 +149,8 @@ def delete_entries_batch(db: Session, entry_ids: list[str]) -> int:
     """Batch delete entries, return count of successfully deleted."""
     deleted = 0
     for entry_id in entry_ids:
-        db_entry = get_entry(db, entry_id)
-        if db_entry:
-            db.delete(db_entry)
+        if delete_entry(db, entry_id):
             deleted += 1
-    if deleted > 0:
-        db.commit()
     return deleted
 
 

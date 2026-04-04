@@ -247,6 +247,41 @@ async def create_entry(
     )
 
     entry = crud.create_entry(db, entry_create, created_by=created_by)
+
+    # Trigger webhooks for new entry
+    try:
+        from webhook_handlers import notify_new_issue, notify_high_priority
+
+        # Notify new issue
+        await notify_new_issue(
+            entry_id=entry.id,
+            title=entry.title,
+            type_tag=entry.type_tag,
+            status_tag=entry.status_tag,
+            feature_module=entry.feature_module,
+            user_name=entry.user_name,
+            source_type=entry.source_type,
+            source_url=entry.source_url,
+            priority=getattr(entry, 'priority', '中'),
+        )
+
+        # Notify if high priority
+        if getattr(entry, 'priority', '中') in ['高', '紧急']:
+            await notify_high_priority(
+                entry_id=entry.id,
+                title=entry.title,
+                type_tag=entry.type_tag,
+                status_tag=entry.status_tag,
+                feature_module=entry.feature_module,
+                user_name=entry.user_name,
+                source_type=entry.source_type,
+                source_url=entry.source_url,
+                priority=entry.priority,
+            )
+    except Exception as e:
+        # Log error but don't fail the request
+        print(f"Webhook notification error: {e}")
+
     return RedirectResponse(url=f"/entries/{entry.id}", status_code=303)
 
 
@@ -473,6 +508,41 @@ async def api_get_entry(entry_id: str, db: Session = Depends(get_db)):
     return entry
 
 
+@app.patch("/api/entries/{entry_id}")
+async def api_patch_entry(
+    entry_id: str,
+    request: Request,
+    db: Session = Depends(get_db),
+):
+    """API: Partial update of an entry."""
+    entry = crud.get_entry(db, entry_id)
+    if not entry:
+        raise HTTPException(status_code=404, detail="Entry not found")
+
+    data = await request.json()
+
+    # Build update payload with only provided fields
+    update_data = {"version": entry.version}
+    allowed_fields = [
+        "title", "analysis_todo", "community_todo", "source_url",
+        "assignee", "status_tag", "feature_module", "user_name",
+        "volume", "notes", "parent_record", "type_tag",
+        "knowledge_base_url", "github_issue_url", "source_type"
+    ]
+
+    for field in allowed_fields:
+        if field in data:
+            update_data[field] = data[field]
+
+    entry_update = CRMEntryUpdate(**update_data)
+    updated_entry = crud.update_entry(db, entry_id, entry_update, edited_by="system")
+
+    if not updated_entry:
+        raise HTTPException(status_code=409, detail="Update failed due to conflict")
+
+    return updated_entry
+
+
 @app.get("/api/stats")
 async def api_get_stats(db: Session = Depends(get_db)):
     """API: Get dashboard statistics."""
@@ -603,6 +673,89 @@ async def api_get_user(username: str, db: Session = Depends(get_db)):
         "display_name": user.display_name,
         "created_at": user.created_at,
     }
+
+
+# AI Assistant API Endpoints
+
+@app.post("/api/ai/parse")
+async def api_ai_parse_issue(request: Request):
+    """API: Parse raw issue text using AI."""
+    try:
+        from ai_assistant import get_ai_assistant
+
+        data = await request.json()
+        text = data.get("text", "")
+
+        if not text:
+            raise HTTPException(status_code=400, detail="Text is required")
+
+        ai = get_ai_assistant()
+        result = ai.parse_issue(text)
+
+        if result is None:
+            raise HTTPException(status_code=500, detail="AI parsing failed")
+
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/api/ai/suggest-kb")
+async def api_ai_suggest_kb(
+    request: Request,
+    db: Session = Depends(get_db),
+):
+    """API: Suggest knowledge base articles for an issue."""
+    try:
+        from ai_assistant import get_ai_assistant
+        from vector_search import get_vector_search
+
+        data = await request.json()
+        title = data.get("title", "")
+        content = data.get("content", "")
+
+        if not title:
+            raise HTTPException(status_code=400, detail="Title is required")
+
+        # Search vector DB
+        vector_search = get_vector_search()
+        kb_results = vector_search.search(f"{title} {content}", limit=3)
+
+        # AI rerank
+        ai = get_ai_assistant()
+        result = ai.suggest_knowledge_base(title, content, kb_results)
+
+        return {
+            "suggestions": kb_results,
+            "ai_recommendation": result,
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/api/ai/generate-response")
+async def api_ai_generate_response(request: Request):
+    """API: Generate response to an issue."""
+    try:
+        from ai_assistant import get_ai_assistant
+
+        data = await request.json()
+        title = data.get("title", "")
+        content = data.get("content", "")
+        kb_article = data.get("kb_article")
+
+        if not title:
+            raise HTTPException(status_code=400, detail="Title is required")
+
+        ai = get_ai_assistant()
+        response = ai.generate_response(title, content, kb_article)
+
+        if response is None:
+            raise HTTPException(status_code=500, detail="Generation failed")
+
+        return {"response": response}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 if __name__ == "__main__":

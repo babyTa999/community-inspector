@@ -1,0 +1,46 @@
+{
+  "name": "IceWhale CRM Workflows",
+  "workflows": [
+    {
+      "name": "Daily Reminder - Unresolved Issues",
+      "trigger": {
+        "type": "schedule",
+        "cron": "0 9 * * *"
+      },
+      "nodes": [
+        {
+          "name": "Get Unresolved Issues",
+          "type": "httpRequest",
+          "method": "GET",
+          "url": "http://crm:8080/api/entries?status_tag=待处理&days_old=3"
+        },
+        {
+          "name": "Send Feishu Notification",
+          "type": "feishu",
+          "webhook": "{{$env.FEISHU_WEBHOOK}}",
+          "message": "🚨 每日提醒：有 {{$json.total}} 个问题超过3天未处理，请尽快查看！"
+        }
+      ]
+    },
+    {
+      "name": "New Issue - Auto Notify",
+      "trigger": {
+        "type": "webhook",
+        "path": "new-issue"
+      },
+      "nodes": [
+        {
+          "name": "Parse Issue",
+          "type": "function",
+          "code": "return [{json: $input.body}]"
+        },
+        {
+          "name": "Send Notification",
+          "type": "slack",
+          "channel": "#icewhale-issues",
+          "message": "📥 新问题：{{$json.title}}\n来源：{{$json.source}}\n链接：http://crm:8080/entries/{{$json.id}}"
+        }
+      ]
+    }
+  ]
+}

@@ -67,6 +67,28 @@ class FeatureModule(str, enum.Enum):
     OTHER = "其他"
 
 
+class SourceType(str, enum.Enum):
+    """Source of the issue - where it came from."""
+
+    DISCORD = "Discord"
+    REDDIT = "Reddit"
+    GITHUB = "GitHub"
+    EMAIL = "Email"
+    INTERCOM = "Intercom"
+    FORUM = "Forum"
+    INTERNAL = "内部"
+    OTHER = "其他"
+
+
+class Priority(str, enum.Enum):
+    """Priority levels for issues."""
+
+    LOW = "低"
+    MEDIUM = "中"
+    HIGH = "高"
+    CRITICAL = "紧急"
+
+
 class User(Base):
     """User model for tracking who made changes."""
 
@@ -146,13 +168,39 @@ class CRMEntry(Base):
     # GitHub Issue 链接
     github_issue_url: Mapped[str | None] = mapped_column(String(1000), nullable=True)
 
-    # 来源类型 (Discord/Forum/私信/邮件等)
+    # 来源类型 (Discord/Reddit/GitHub/Email等)
     source_type: Mapped[str | None] = mapped_column(String(50), nullable=True)
+
+    # 来源原始链接
+    source_url: Mapped[str | None] = mapped_column(String(1000), nullable=True)
+
+    # 优先级
+    priority: Mapped[str | None] = mapped_column(String(20), nullable=True, default=Priority.MEDIUM.value)
+
+    # 父问题ID (用于子问题关联)
+    parent_id: Mapped[str | None] = mapped_column(ForeignKey("crm_entries.id"), nullable=True)
+
+    # 解决时间 (用于统计解决时长)
+    resolved_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
 
     # 创建时间
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         default=lambda: datetime.now(timezone.utc),
+    )
+
+    # Relationships
+    children: Mapped[list["CRMEntry"]] = relationship(
+        "CRMEntry",
+        back_populates="parent",
+        remote_side=["CRMEntry.id"],
+        foreign_keys="[CRMEntry.parent_id]"
+    )
+    parent: Mapped["CRMEntry" | None] = relationship(
+        "CRMEntry",
+        back_populates="children",
+        remote_side=["CRMEntry.id"],
+        foreign_keys="[CRMEntry.parent_id]"
     )
 
     # Optimistic locking - version number for conflict detection
@@ -233,3 +281,46 @@ class RealTimeSession(Base):
 
     def __repr__(self) -> str:
         return f"<RealTimeSession(session={self.session_id}, user={self.username})>"
+
+
+class KnowledgeBase(Base):
+    """Knowledge base articles for issue resolution."""
+
+    __tablename__ = "knowledge_base"
+
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+
+    # 标题
+    title: Mapped[str] = mapped_column(String(500), nullable=False)
+
+    # 内容
+    content: Mapped[str] = mapped_column(Text, nullable=False)
+
+    # 标签
+    tags: Mapped[list[str] | None] = mapped_column(JSON, nullable=True, default=list)
+
+    # 关联的原始问题ID
+    source_issue_id: Mapped[str | None] = mapped_column(ForeignKey("crm_entries.id"), nullable=True)
+
+    # 被引用次数
+    usage_count: Mapped[int] = mapped_column(Integer, default=0)
+
+    # 向量ID (用于Qdrant检索)
+    vector_id: Mapped[str | None] = mapped_column(String(36), nullable=True)
+
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        default=lambda: datetime.now(timezone.utc),
+    )
+
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        default=lambda: datetime.now(timezone.utc),
+        onupdate=lambda: datetime.now(timezone.utc),
+    )
+
+    # Relationships
+    source_issue: Mapped[CRMEntry | None] = relationship("CRMEntry", foreign_keys=[source_issue_id])
+
+    def __repr__(self) -> str:
+        return f"<KnowledgeBase(id={self.id}, title={self.title[:50]})>"
