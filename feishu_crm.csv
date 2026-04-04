@@ -1,0 +1,553 @@
+﻿问题/需求描述,附件,链接,相关人员,tag,描述性tag,分析和todo,社区todo,名字,声量,更新记录日期,备注,父记录
+伟大的系统，又好看又好用。,image.png,,cc @团队,S 信号,,,,johnbramich ,1,2025/10/20,,
+虚拟机在开机后启动,image.png,,@Leo Chen,R 需求,虚拟机,虚拟机相关的功能会暂缓，目前团队内可能没有足够精力，不过这个需求老生常谈了，我会找相关开发同事沟通,,"BernardoHenriquez 
+ ,</ Block ↬ >",2,2025/10/20,https://discord.com/channels/884667213326463016/1251135320825794640/1430938061910446142,
+一些App 安装的需求和建议，主要和path 相关,image.png,https://community.zimaspace.com/t/app-store-settings-preferences/6396,"@Link
+@Leo Chen",R 需求,App Store,,,SirWill,1,2025/10/20,1、如果应用需要文件路径，给默认路径,
+"不开启索引，文件就没有搜索。
+
+这是期望行为吗？",image.png,https://discord.com/channels/884667213326463016/1251135424303337524/1429486558515560519,@Rally @Lauren Pan,待/判断/中,,预期,我们在优化,AngryMaritimer,1,2025/10/20,,
+在Windows上重命名共享遇到问题？,image.png,https://community.zimaspace.com/t/renaming-a-folder-being-shared-causes-samba-issues/6426,@Rally,待/判断/中,,"客户端/服务端修改samba文件夹名需要验证问题是否存在
+服务端修改samba根文件夹名需要同步修改samba配置文件,以使得samba可用",已经提报，会去验证和在road map 中处理此问题 预计1.5.2 会修复,SirWill,1,2025/10/21,,
+Docker自定义安装存在问题,,https://community.zimaspace.com/t/apps-links-dashboard-issue/6391/7?u=zima-giorgio,@Rally,已定位/知晓,,"/var/lib/casaos/apps/yourprojectname文件名重叠的问题,之前遇到是由于同一个应用,这次的新问题需要和用户继续沟通排查",,Harryd,1,2025/10/21,用户提供了复现的方式,
+缺少字符集？,image.png,https://community.zimaspace.com/t/samba-shares-and-error-msg-dos-charset-cp850-unavailable-using-ascii/6455,@Rally,已定位/知晓,,"那个报错信息没用,需要远程排查用户实际问题",,Harryd,1,2025/10/21,用户自称是KDE 的问题。,
+zimaos-search.conf 拼写错误？/ 强制索引需求,image.png,https://community.zimaspace.com/t/is-there-a-way-to-force-zimaos-ai-file-indexing/6196,@Rally,已定位/知晓,,"已确认,151修复",,blacksunix,1,2025/10/21,,
+重启后备份 Google Drive 冲突,image.png,https://community.zimaspace.com/t/backup-google-drive-conflicts-after-reboot/6459,@Rally,重要,,"网盘读写本身存在问题,目前我们团队正在进行优化,从多个角度,性能,稳定性,可用性
+等到网盘优化完后,网盘备份的问题再检查",需要穿透技术意见,Syko1,1,2025/10/21,在要一些详细信息,
+将端口开放（给nginx proxy manager) 后，win11 上客户端无法工作,"Clip_20251023_172201.png,Clip_20251023_165450.png",https://community.zimaspace.com/t/zima-app-windows-no-connection-after-changing-ports-on-zimaos/6510,@Rally,待/判断/中,,"本地验证切换端口没问题,nginx问题另外还要再花时间复现",引导去dashboard 改,ThomasSpi,1,2025/10/23,,
+Plus 用户新建第四个用户出现错误？,Clip_20251024_111849.png,https://community.zimaspace.com/t/zimaos-license/6299/10?u=zima-giorgio,@Rally,重要,,"和是否plus无关
+
+建联中",,sny,1,2025/10/17,,
+群晖共享问题,Clip_20251024_140438.png,https://community.zimaspace.com/t/solved-synology-smb-connection-error-eof/6495,,已定位/知晓,,,,fabex13,1,2025/10/24,用户自行排查,
+2.3 客户端在win11 开启异常,Clip_20251024_151315.png,https://discord.com/channels/884667213326463016/1251135424303337524/1430819304248446998,@Jerry,重要,,"看起来像是安装ZT失败了,有一个教程是教如何打开内部的一个文件进行手动安装ZT,等我找出来",等rally 给方案,Jemm,1,2025/10/24,用户给了部分日志,
+字体改进,Clip_20251027_104906.png,https://community.zimaspace.com/t/storage-view-temperature-font-graphical-gitch/6379,@Jerry,待/判断/中,,这应该是前端渲染问题 @Rally,,ASRTichy,1,2025/10/21,,
+更明确的任务和事务 信息展示,image.png,https://community.zimaspace.com/t/ux-ui-improvement-s-in-dashboard/6385,@Leo Chen,R 需求,,任务中心功能在挺久之前的版本有做过规划，但由于成本不低被暂时搁置了，理解这是一个NAS普遍功能，也一直在roadmap中，会和团队成员沟通并确认开发排期后回复用户,,dropn9ne,1,2025/10/21,,
+zimaos-search 强制索引需求,image.png,https://community.zimaspace.com/t/is-there-a-way-to-force-zimaos-ai-file-indexing/6196,@Leo Chen@Rally,待/判断/中,,,,blacksunix,1,2025/10/21,,
+系统内很多地方对键盘操作支持度不友好，体验不统一。,image.png,https://community.zimaspace.com/t/apps-refresh-and-enter-action/6406?u=collin1113_99312,@Leo Chen,R 需求,体验优化,这个问题我们会尽量在2.0前后修复，@Nora(倪仁伟）已经在和前端沟通优化组件库设计，键盘支持理论上也在组件设计内,,generrosity,1,2025/10/20,,
+ZVM 直接访问相关硬件,image.png,https://icewhale.feishu.cn/record/FlVwrzUT5e7tZPcSomMcE9YfnWh,cc @团队,R 需求,虚拟机,,,"SirWill,vipper_666",2,2025/10/20,zvm,
+需要自定义 网盘的 名字,image.png,,@Leo Chen,R 需求,Files,已知晓，规划中,规划中,"Rosko,John",2,2025/10/20,,
+应用分组，为了减少磁贴数量,image.png,https://icewhale.feishu.cn/record/BpqtrVahCeR5NXcuKwwcpOtTnif,@Leo Chen,R 需求,,这个会在2.0的dashboard改版中落地，不过不一定是分组，但会有类似的功能,,david,1,2025/10/21,,
+应用商店，可显示具体版本号,image.png,https://community.zimaspace.com/t/appstore-display-version-information/6415?u=collin1113_99312,@Leo Chen,R 需求,App Store,会在后续App store 2.0中落地,,"SirWill,dropn9ne",2,2025/10/21,,
+"这里的“Zima 存储”指的是 ZimaOS 本身。这里的文字指导可能有多义性：
+用户的“感知局域网内的其他设备/ZimaOS 功能”确实是一个好建议。",image.png,,@Leo Chen,R 需求,体验优化,"1. 这个名称我们会在1.5.3或1.6版本中优化
+2. 和Orca确认过，自动扫描局域网内设备的功能可以沿用至web侧，会考虑在1.6或后续版本中加入",,true911,1,2025/10/21,,
+共享samba 前，可以给共享重命名共享，区别于文件夹原来的名称,image.png,https://community.zimaspace.com/t/renaming-a-folder-being-shared-causes-samba-issues/6426,@Leo Chen,R 需求,"Files, 体验优化",了解，这个会和开发讨论，近期可能不会实施,,SirWill,1,2025/10/21,,
+客户端，重启ZimaOS 功能,image.png,https://community.zimaspace.com/t/mobile-ios-ipados-zima-client-reboot-shutdown-ability/6386,@田依可,R 需求,移动端,可以看情况加入，先和开发聊一聊吧 @田依可,,"dropn9ne,SirWill,piranin",3,2025/10/21,如果ZimaOS 遇到一些问题，重启可能解决这个问题。,
+移除一些功能/图标,Clip_20251027_104944.png,https://community.zimaspace.com/t/unused-os-app-removal/3689/4?u=zima-giorgio,@Leo Chen,R 需求,,,roadmap ，6个月的尺度 插件可能？,maallen40,1,2025/10/21,,
+非内网环境，向朋友分享文件,image.png,https://community.zimaspace.com/t/suggestions-how-to-share-files-to-external-people/6461,@Leo Chen,R 需求,,,share via link 优化,Hsh,1,2025/10/21,,
+请判断网卡是否支持驱动,image.png,https://community.zimaspace.com/t/zimaos-installation-troubleshooting-guide/5016/2,@Jerry,R 驱动需求,,,,Leopold,1,2025/10/22,,
+链路聚合,image.png,https://community.zimaspace.com/t/ethernet-link-aggregation/6468,@Jerry @Leo Chen,R 需求,,,,Heimwerkerking,1,2025/10/22,https://community.zimaspace.com/t/network-configuration-options/6482,
+在存储空间计算方面，用户觉得困惑,"f05a9e3e792d13b86ff51a4ed86c79ebd89b1443.png,3bfc757c071ce72cab920b35fed48be203a5b15a.png,80071d2e5cba011915412b7726b1c50cf32f4e3e.png",https://community.zimaspace.com/t/storage-usage-monitoring/6489,@Leo Chen @Rally,已定位/知晓,,团队会整理、统一化此处的设计。,"建联
+",andysam,1,2025/10/23,,
+另一种内存 展示方式,image.webp,https://discord.com/channels/884667213326463016/1166619138521829396/1430812924565258330,@Leo Chen,R 需求,,,,GrimOak,1,2025/10/23,,
+自行添加驱动需求。,Clip_20251024_153225.png,https://discord.com/channels/884667213326463016/1251135320825794640/1431183038477504634,@Jerry,R 需求,,不做,,Wunjox,1,2025/10/24,,
+请求添加 mellanox MNPA19-XRT 驱动,Clip_20251024_154143.png,https://community.zimaspace.com/t/mellanox-mnpa19-xtr-drivers-are-missing/6525,@Jerry,R 驱动需求,,,,Wunjox,1,2025/10/24,,
+脚本贡献（清理有备份的系统）,image.png,https://community.zimaspace.com/t/smart-zimaos-cleanup-script-safe-for-system-with-backups/6483,cc @团队,S 信号,,,,gelbuilding,1,2025/10/22,,
+需要安全工具（企业版本）,image.png,https://community.zimaspace.com/t/security-tools-aka-antivirus-edr-agent-in-zimaos/6378,cc @团队,S 信号,,,追问,Harryd,1,2025/10/21,,
+LDAP验证技术讨论,image.png,https://community.zimaspace.com/t/ldap-authentication/6449,cc @团队,S 信号,,,,"ASRTichy,SirWill,dropn9ne",3,2025/10/21,,
+用户继续怀念 sharevialink,,https://discord.com/channels/884667213326463016/1251135424303337524/1429646908560773313,cc @团队,重要,,,等lauren 给节点,"catgirlash,SirWill,gochaddy",3,2025/10/21,https://community.zimaspace.com/t/missing-share-via-link/6221/3?u=zima-giorgio,
+让虚拟机自动启动的方式,image.png,https://discord.com/channels/884667213326463016/1251135390203777124/1429395033047564289,cc @团队,Tips,,,,stevy,1,2025/10/21,,
+备份并恢复RAID 阵列的案例,image.png,https://discord.com/channels/884667213326463016/1251135320825794640/1429503775726506024,cc @团队,Tips,,,考虑发内容,carchis,1,2025/10/21,,
+从icloud 下载照片的docker,image.png,https://community.zimaspace.com/t/icloudpd-photos-downloader-installation/6375,cc @团队,S 信号,,,,f800r,1,2025/10/21,,
+卸载CasaOS 后的清理工作。,Clip_20251027_103527.png,https://community.zimaspace.com/t/tidying-up-after-uninstalling-casaos/6535,cc @Link,R 需求,,,,MarkB,1,2025/10/27,,
+SSD as Cache 的具体理由,Clip_20251027_113846.png,https://community.zimaspace.com/t/zimaos-nvme-cache-to-hdd-pool/5436/5?u=zima-giorgio,cc @Leo Chen,R 需求,,,,SirWill,1,2025/10/27,,
+intel x710 驱动集成需求？,Clip_20251027_114819.png,https://community.zimaspace.com/t/for-those-who-have-an-install-that-have-sfp/6548/2,@Jerry,R 需求,,,,SirWill,1,2025/10/27,,
+Win 版本Client 中，log file 中明文存储了SMB密码,Clip_20251027_120003.png,https://community.zimaspace.com/t/zclient-win-version-compatability/6389/3?u=zima-giorgio,@Rally,重要,,"已记录到bug list,下一版客户端修复",明确回复我们会修掉,generrosity,1,2025/10/27,,
+网络优选以及更丰富的网络请求,Clip_20251027_155903.png,https://community.zimaspace.com/t/better-ways-to-manage-several-nics-ip-adresses-both-in-zimaos-and-in-the-zima-client/6542,@Leo Chen,R 需求,,,,payoyo,1,2025/10/27,网线也能优选,
+暗色模式 for Files,image.png,https://discord.com/channels/884667213326463016/1251135320825794640/1432485884061679758,@Leo Chen,R 需求,,,,max,1,2025/10/27,but dark reader extension works nicely,
+数据一致性问题,Clip_20251027_171655.png,https://community.zimaspace.com/t/data-corruption/6545,@Rally,重要,,"缩小问题范围,比如试着用小文件夹,小文件,测量文件一致性的工具的选择",,generrosity,1,2025/10/27,问到了一些信息。等待调查,
+"USB 连接不支持的文件系统的盘时，YSK 可以看到磁盘，但是不能访问。Storage 页面未能出现。
+
+@田依可 补充：单盘启用界面不能出现改盘。","6494727c057d842563963f65a8ba61e7d87dcd4b.png,69874edd87ea5280beefa45dff61cbd86bc67534.png,image.png",https://community.zimaspace.com/t/fresh-install-1-5-says-it-s-plus-but-wont-add-more-disk/6599/5,@田依可,已定位/知晓,,,,Lefizz,1,2025/10/29,,
+"迁移位置后的体验，是否可优化？
+1、存储显示一致性
+2、更完善的文件路径选择
+3、App 安装页面的路径提示",image.png,https://community.zimaspace.com/t/need-help-with-disks-and-files-path-change-after-migrating-location/6610,@Leo Chen,R 需求,"存储显示一致性, 更完善的文件路径选择",1. ,花了比较长的时间尝试弄明白这里的问题。这里还有一个文档需求@Link,Poni99,1,2025/10/29,有价值,
+2FA/MFA 认证的功能请求,image.png,https://community.zimaspace.com/t/2fa-mfa-missing-timeline-for-implementation/6632/2,@Leo Chen,R 需求,,,,Ruben,1,2025/10/29,,
+"虚拟机问题和 nextcloud 更新问题
+
+solution: 
+connect via ssh
+ 
+cd /DATA/.casaos/apps/nextcloud (write the container name in the nextcloud section)
+docker compose pull
+docker compose up -d 
+
+i solved the virtual machine problem in a different way 
+
+truncate -s 0 /etc/libvirt/virtlogd.conf","image.png,image.png",https://discord.com/channels/884667213326463016/1251135424303337524/1432823319639494707,,已定位/知晓,,,,torrentsinan,1,2025/10/29,用户自行解决了问题。,
+构建一个可以与安全启动（Custom 模式）配合工作的系统镜像。,"IMG_1867.webp,image.png",https://discord.com/channels/884667213326463016/1251135320825794640/1432769550612566168,@Jerry,R 需求,,,,"Hackaro,MjTech",2,2025/10/29,,
+如果已经使用了VPN，iOS还能通过什么方式连接ZimaOS，ZimaOS 会采用其他打孔或者中继服务吗？,image.png,https://community.zimaspace.com/t/when-will-a-proper-hole-punching-relay-service-be-introduced-to-access-and-transfer-data-to-zimaos/6639/2,@Leo Chen,R 需求,,,询问运转发接受度。,Ruben,1,2025/10/30,,
+"应用安装与权限相关的设置和建议。
+
+",image.png,https://community.zimaspace.com/t/improve-folder-ownership-and-permission-handling-for-mounted-volumes/6642,@Leo Chen,R 需求,,,,sny,1,2025/10/30,,
+文件App，显示ZimaOS-HD 未挂载。但是通过存储面板进入ZimaOS-HD，就能进入。,image.png,https://community.zimaspace.com/t/files-app-not-working-for-zimaos-hd-1-5-1-beta1/6644,@Rally,重要,,调查中,,SirWill,1,2025/10/30,,
+用户报告说，迁移docker app 后，dashboard 丢失UI （1.5.1 beta）,"image.png,image.webp",http://私信,"@Rally
+@Leo Chen",重要,功能 - migrate location(not migrate in Files app),调查中,,Slawek,1,2025/10/30,https://discord.com/channels/@me/1433388221227601972,
+"用户说我们的局域网发现是基于mDNS 的，这个技术不能很好的兼容它的Deco 网络。他询问能不能有另一个机制在局域网发现ZimaOS。
+
+同时，他提到，Client 使用remote ID 连接的时候，每次都必须输入账密。",image.png,https://community.zimaspace.com/t/connect-via-local-ip/6648/4,@Leo Chen,R 需求,,,会补充ip输入的,santhora,1,2025/10/31,,
+1.5.0， 文件名包含英文逗号，就无法下载,image.png,https://community.zimaspace.com/t/unable-to-download-from-files-if-the-path-filename-has-a-comma-in-it/6658,@Ns2Kracy,已定位/知晓,,把逗号当成分隔符了,,ASRTichy,1,2025/10/31,giorgio复现了这个问题。,
+Filses 中，路径的显示是有误导的。比如，在应用设置面板，如果想应用正确的USB 和 LAN sharing 位置，则路径应该加入 /media 的前缀,"image-1.webp,image.webp,image.png",https://discord.com/channels/884667213326463016/1251135390203777124/1432967428207415297,@Leo Chen,R 需求,,,,RedNumbers,1,2025/10/31,,
+"自动运行脚本：
+
+工作流：凌晨1点自动获取新游戏。（局域网缓存下载）",image.png,https://discord.com/channels/884667213326463016/1251135424303337524/1433549021930061986,@Leo Chen,R 需求,,,,Raster,1,2025/10/31,,
+设备信息面板 n100 v1.5 中缺少信息,83e77c25444e79a29bf49c02b4dcdc7a42ea0a1a.jpeg,https://community.zimaspace.com/t/missing-info-in-device-info-panel-n100-v1-5/6679,@Rally,待/判断/中,,"zimaos主服务看起来没正常启动导致,等待用户回复",,allexxo,1,2025/11/03,,
+添加定时重启功能,image.png,https://community.zimaspace.com/t/add-scheduled-restart-function/6675/2,@Leo Chen,R 需求,,,,VictorSal0,1,2025/11/03,,
+SMB 问题,image.png,https://community.zimaspace.com/t/smb-share-stop-working-after-latest-beta-update/6685/,@Rally,已定位/知晓,FAQ - 1.5.1 beta-1,1.5.1会修复，原因是smb关于interface的参数需要删除，绑定了网口,,"Mikam74,Syko1,renatobasa88,bertybassett",4,2025/11/03,,
+NFS GUI显示,,https://discord.com/channels/884667213326463016/1251135320825794640/1434742915237937252,@Leo Chen,R 需求,,,,mrn,1,2025/11/03,,
+“迁移用户数据库”进度卡在 70%,image.png,https://community.zimaspace.com/t/migrating-user-database-stuck-at-70-percent/6681,@Dina（丁雯）,已定位/知晓,,"1. 迁移卡顿问题,排查中
+2. 迁移服务会在系统启动后不再继续,已在151解决
+3. 其他迁移问题会整理到152,预期会在152进行修复",,NASNoob,1,2025/11/03,"正在建联，邀请远程id
+用户未提供id
+
+用户反馈，1.5.1 中，问题似乎已经解决",
+添加对 Realtek 网卡驱动程序 r8125 2.5G 的支持,image.png,https://community.zimaspace.com/t/add-suppot-for-realtek-network-driver-r8125-2-5g/6719,@Jerry,R 需求,,,,bpug,1,2025/11/03,,
+部分设备无法进行局域网发现，希望解决 LAN Discovery 的异常。,image.png,https://community.zimaspace.com/t/lan-discovery-issue-on-zimaos/6739,@Rally @Jerry,待/判断/中,,,,,0,2025/11/04,"等待日志
+
+用户未上传日志",
+qbittorrent 搭配 Glueton 和 NordVPN VPN 的经验分享。,image.png,https://community.zimaspace.com/t/vpn-client-for-zima-os/5347/6?u=zima-giorgio,@Leo Chen,S 信号,,,,wiliamvj,1,2025/11/04,,
+浏览器缓存导致的UI 异常。,73cc9cdd47df23d12eba60ffa7cd30da59b716a5.jpeg,https://community.zimaspace.com/t/solved-problem-restarting-zimaos-1-5-1-beta1/6721,@Rally,待/判断/中,,"前端问题,已记录,yuri在151尝试修复
+检查以下三个弹窗,是否得到改善
+1. 修改头像
+2. 网络详细页
+3. 系统重启按钮",,"scott492010,guywithjeep",2,2025/11/04,"引导用户清浏览器解决问题。但问题仍需定位。
+
+有第2例
+https://discord.com/channels/884667213326463016/1251135424303337524/1435801611913134211",
+同步的需求。,image.png,https://community.zimaspace.com/t/local-folder-sync-in-files/5681/5,@Leo Chen,R 需求,,,,dropn9ne,1,2025/11/05,,
+USB coral.io 驱动需求。,image.png,https://community.zimaspace.com/t/how-install-coral-apex-drivers-pci-working-for-frigate-on-zimaos/5004/14?u=zima-giorgio,@Jerry,R 需求,,,,mozimek,1,2025/11/05,,
+系统及 FTP 协议的请求,image.png,https://community.zimaspace.com/t/ftp-server-app-or-tools/6342/4,@Leo Chen,R 需求,,,,snow2999,1,2025/11/05,,
+备份行为的可预期性：定时备份,image.png,https://community.zimaspace.com/t/how-do-backups-work-in-detail-and-when-are-they-performed/6135/3,@Leo Chen,待/判断/中,,@Rally 现状是always 每天会备份一次。（zima storage 才能实时上报）,,"kkmachado,Juwa",2,2025/11/05,,
+硬盘在Files中未显示,"67928c3e1fee7174a6c25c7d8630e070421a1d65.png,e96aaa4c02d3ebf23e727b912447a453723ca99b.png",https://community.zimaspace.com/t/display-problems-in-file-manager/6722,@Rally,重要,,"11-21：用户已经返回相关命令结果。
+
+Rally： 预计1.5.2 beta 修复
+
+等待用户回复
+curl http://127.0.0.1/v2/local_storage/storages
+通过这个命令检查用户的files返回的数据是前端问题还是后端问题
+已定位是磁盘类型欠缺导致,会追加一个兜底的磁盘类型判断",,lucparrini,1,2025/11/05,,
+父文件夹按钮的添加,image.png,https://discord.com/channels/884667213326463016/1251135320825794640/1435296164298752051,@Leo Chen,S 信号,,,,refreshfr,1,2025/11/05,,
+给硬盘重命名，添加标签、描述等。,"image.png,image.png",https://discord.com/channels/884667213326463016/1251135424303337524/1435270870120796282,@Leo Chen,R 需求,,,,refreshfr,1,2025/11/05,,
+用户反映，Plus 按钮 的message 对他不明确,image.png,https://community.zimaspace.com/t/lost-plus-after-curl-update/6606/14,@Leo Chen,R 需求,,,,MrMagoo,1,2025/11/05,,
+Mergerfs 和 SnapRAID 呼声 的 新人头,image.png,https://community.zimaspace.com/t/mergerfs-and-snapraid-support-in-zimaos/5304/24,@Jerry @Leo Chen,R 需求,,,,"guy,vipper_666,gelbuilding,piranin,adammo",5,2025/11/06,https://community.zimaspace.com/t/support-for-mergerfs/6835,
+ZC 用户的硬盘显示位置与预期不匹配,7945f550ee9b1caca8e9d2c98a1bd803310e011b.png,https://community.zimaspace.com/t/display-issue-of-the-zimacube-7th-bay-in-zimaos/6766/3,@Rally@Leo Chen,重要,,"local-storage.conf配置文件和pci错位,已回复用户
+本地74 77未复现",,magic,1,2025/11/06,,
+选择根目录备份的描述与预期不匹配。,"image.png,image.png",https://community.zimaspace.com/t/v-1-5-1-root-folder-backup-feature/6776,@Leo Chen@Rally,待/判断/中,,"想备份根目录,不知道是为啥,在问原因",,"gelbuilding,vipper_666",2,2025/11/06,,
+SSD as cache 但没有讲理由，仅作记录,image.png,https://discord.com/channels/884667213326463016/1251135320825794640/1435694405938974821,@Leo Chen,S 信号,,,,"SwanRonson,Wunjox",2,2025/11/06,,
+用户说，ISO 文件可能会导致这个问题，但img 不会。,image.png,https://discord.com/channels/884667213326463016/1251135424303337524/1435654286724956251,@Jerry @Rally,待/判断/中,,"和镜像安装没关
+1. 是什么硬件,会导致系统盘信息没显示出来
+2. 多次创raid,导致/media/Main-Storage路径已存在",,giganap,1,2025/11/06,,
+系统安装在多个驱动器上？,image.png,https://community.zimaspace.com/t/mirrored-boot-drive-support/6786/2,@Leo Chen,R 需求,,,,marcuscmy,1,2025/11/06,,
+计划性的s.m.a.r.t. test 和result 需求,"image.png,4c0b63694ef9cdb148cbcf70b1abe550107706da.png",https://community.zimaspace.com/t/configuring-smart-test-schedule-and-smart-results/6788,@Leo Chen,R 需求,,,,marcuscmy,1,2025/11/06,,
+PC zima client 实现自动登录的需求,image.png,http://私信,@Leo Chen,R 需求,,,,JCS,1,2025/11/07,,
+"AMD CPU ，widget 相关功耗和温度的显示支持
+
+备注：用户说1.5.0 可以显示",image.png,https://community.zimaspace.com/t/i-am-using-an-amd-5700u-and-in-zima-os-the-temperature-and-power-consumption-are-not-displayed/4020/3?u=zima-giorgio,"@Leo Chen @Jerry
+@Rally",待/判断/中,,,,LingYi2201,1,2025/11/07,,
+DLAN 到 1.5.1 / beta 后不工作,"dlna 配置问题.mp4,image.png",https://community.zimaspace.com/t/dlna-config-1-5-1-beta/6666/2,@Rally,待/判断/中,,本地未复现，但是有个用户有解决方法，怀疑是inode错误，拷错配置文件,,"mane,king786,glexu,Ragnulf67",4,2025/11/07,"用户说与缓存无关。
+
+Ragnulf67:
+
+I deleted the file /mnt/overlay/upper_etc/minidlna.conf , reboot the system . And everything works again",
+在新版VMware Pro（25H2）上，默认配置不兼容，需要改兼容性配置到,"34e98eec84e52390c8f9b253039f6adeacc120c8.jpeg,image.png",https://community.zimaspace.com/t/vmware-installation-procedure-doesnt-seem-to-work/6782/25,@Rally @Jerry,待/判断/中,,,,Mr.E,1,2025/11/07,,
+iscsiadm 工具的添加请求,image.png,https://community.zimaspace.com/t/add-a-option-to-create-iscsi/4980/3,@Leo Chen,R 需求,,未来版本添加@Jerry,,avexel,1,2025/11/07,,
+"虚拟机扩盘后，Plus 会丢失。
+
+扩展系统盘，如何还能保留Plus",,https://community.zimaspace.com/t/plus-license-changed-to-community-edition-after-adding-ram-to-zimaos-vm/6792/5,@Jerry,S 信号,,硬盘信息是zimaos dc 获取的重要信息。虚拟机扩盘可能导致硬盘信息变化，导致dc变化,,setfx179,1,2025/11/07,,
+网卡未正常列出。,db932282af427ffc3cd73e32b25bbb6e972d8ec1.png,https://community.zimaspace.com/t/new-server-fresh-zima-os-1-5-0-install-network/6814/2,@Rally,待/判断/中,,"三方设备网卡
+lshw解析网卡失败",,SirWill,1,2025/11/10,,
+路径覆盖问题。,image.png,https://community.zimaspace.com/t/lost-several-tb-of-folders/6812,@Rally,待/判断/中,,"描述的不清不楚,不知道在哪找回了数据,要继续追问",,jammz,1,2025/11/10,,
+"切换到https 后，虚拟机无法正常工作。
+
+（但是去掉s 后，能工作）",image.png,https://discord.com/channels/884667213326463016/1251135320825794640/1436455951631781999,@Dina（丁雯）,已定位/知晓,,存在该问题，原因是没有注册zvm https的端口和自签，等网关统一鉴权完成就能解决这个问题,,,0,2025/11/10,,
+RAID 创建未成功，切换回自带系统可以创建,image.png,https://community.zimaspace.com/t/terramaster-f8-plus-raid-not-working/6820,@Rally,已定位/知晓,,"自身硬件问题,换槽后unraid和zima都能创raid",,yxyx999,1,2025/11/10,,
+snapraid 是卡住他放弃OMV 的唯一理由。,image.png,https://community.zimaspace.com/t/mergerfs-and-snapraid-support-in-zimaos/5304/25,@Leo Chen,R 需求,,,,MrSkrumpkin,1,2025/11/10,,Mergerfs 和 SnapRAID 呼声 的 新人头
+系统配置备份,image.png,https://community.zimaspace.com/t/backup-the-main-zimaos-configuration/6844,@Leo Chen,R 需求,,,,Mr.E,1,2025/11/10,,
+"双路机器的兼容性需补充
+
+1、 CPU 核心数量；温度；info 问题
+2、 RAM info 问题","d8a230b122676382d9f1bf3300485699e1644744.png,37fc3979306a922a2154c60614fab2ef95b03c58.png,5aac2bf52a53abdaad913ebcb72b69f191d77197.jpeg",https://community.zimaspace.com/t/bug-incorrect-processing-of-dual-processor-setups/6847/2,@Jerry,R 需求,,,,marcuscmy,1,2025/11/10,,
+设置了 SSH 仅使用公钥且无密码，但 SSH 登录时仍然要求输入密码。(also i setup ssh to only use pubkey and no pass but it still asks me for a password everytime i ssh in) 【ZIMAOS zimaos-general】 ,image.png,https://www.google.com/search?q=https://discord.com/channels/884667213326463016/1251135320825794640/1436274613255671858,@Jerry,S 信号,,,,Oblivionis,1,2025/11/11,,
+在GUI 层面实现 ZimaOS 互联组网。,image.png,https://community.zimaspace.com/t/allowing-one-zimaos-instance-to-connect-to-another-via-zerotier/6848,@Leo Chen,R 需求,,,,marcuscmy,1,2025/11/11,,
+"更清晰应用安装旅程
+
+1、官方和三方App Store带来困惑
+2、版本号显示
+3、自定义安装旅程，回退受挫",image.png,https://community.zimaspace.com/t/app-store-confusion-clearly-identify-differences/6853,@Leo Chen,R 需求,,,,SirWill,1,2025/11/11,,
+随系统启动的虚拟机,image.png,https://community.zimaspace.com/t/auto-start-a-vm-iniciar-vm-en-automatico/6860/2,@Jerry,R 需求,,,,lolero,1,2025/11/11,,
+"涉及子账户 和 Zima Client 的权限控制与检查
+
+","81cecafcc21f8e8d5b7afb43c2aeb42b78cd3d2f_2_1800x2400.jpeg,d02add46b932bbc0c36a913d5898e8b9dad16d98_2_1800x2400.jpeg",https://community.zimaspace.com/t/access-control-regarding-zima-client/6869/9,"@Jerry @Rally@Link 
+cc@Vicky
+@Leo Chen",修复中,,"ZimaOS 客户端尚未适配子账号的权限
+jerry已回复",,Miles,1,2025/11/11,,
+immich 的升级提示造成困惑,image.png,https://community.zimaspace.com/t/why-am-i-being-offered-an-update-that-is-a-big-downgrade/6865,@Rally,待/判断/中,,"升级完/安装完2.1.0,仍有immich更新提示
+152-beta1再修复一轮,使得immich更新完不再显示",,SirWill,1,2025/11/11,,
+"CasaOS 0.4.15， 电脑端/手机端都会：
+
+描述：
+
+在自定义应用的时候，会把上一个图标覆盖了。
+
+用视频举个例子：
+安装前：18个图标
+
+安装 php-runtime:latest（自定义面板，CLI 方式），
+
+问题：安装完成，还是18个图标（末位图标被覆盖
+
+安装 tugtainer
+
+问题：安装完成，还是18个图标（末位图标被覆盖",Weixin Videos2025-11-11_144541_376.mp4,https://github.com/IceWhaleTech/CasaOS/issues/2308,"@Link
+
+@Rally",待/判断/中,,"ZimaOS 会在1.5.2修复
+",,じ☆ve【 放下】*° ^_^....... （国内微信,1,2025/11/11,,
+用户认为 禁用一些 功能可以 释放资源。,image.png,https://discord.com/channels/884667213326463016/1251135320825794640/1437613520496889950,@Leo Chen,R 需求,,,,jofraprez,1,2025/11/11,,
+ZFS GUI 支持。快照支持。,"image.png,image.png",http://1.5 宣发视频,@Leo Chen,R 需求,,,,"eightfoldstories,cameronfrye5514",2,2025/11/11,,
+"新装后，创建RAID 显示挂载点不为空。
+
+相关目录无挂载点
+
+https://community.zimaspace.com/t/issues-with-zimaos-hd-post-install-doesnt-grow-partition-path-lost-under-apps-doesnt-retain-settings-after-reboot/6855/6","image.png,image.png",https://youtu.be/olqdWlQQaUc?t=1511,"@Rally
+@Jerry",已定位/知晓,,"看上去像是安装问题，系统启动时没有查找到data分区，建议用户重新安装一次，同时看到用户使用了LSI的 阵列卡，也有可能是驱动问题导致。
+（重要信息见附件截图）",已经建议换盘安装，反馈是已经安装成功。,isotophe,1,2025/11/12,,
+希望原生就能输出一个GUI OS 界面。,image.png,https://discord.com/channels/884667213326463016/1251135424303337524/1438222099092209675,,S 信号,,,,,0,2025/11/12,,
+LDAP 新理由,image.png,,cc @团队,S 信号,,,,ZimaFan,1,2025/11/12,,LDAP验证技术讨论
+开机启动虚拟机的具体理由,image.png,https://community.zimaspace.com/t/auto-start-a-vm-iniciar-vm-en-automatico/6860/5,@Leo Chen,R 需求,虚拟机,,,lolero,1,2025/11/12,,虚拟机在开机后启动
+在Files 中剪切，在目的地粘贴。在目的地选择跳过选项的时候，源文件依然被删除,image.png,https://community.zimaspace.com/t/files-app-issue-cut-paste/6901/2,@田依可,已定位/知晓,,已确认，152/153修复,,Khapra,1,2025/11/13,,
+dashboard 不加载应用（用户称是docker API 的问题）,e3961466b5ca480bf49abd1798e95a08.png,http://微信群，DC 等,@Link,重要,,,,"Tn.,Supangkat Eka Prasetya, S.Kom,breakone9r,Gabi71,Martin Kotflotz,KNUX-03,فلافل",7,2025/11/13,,
+Snap raid 催更的新理由： 可以在后期扩展RAID 1 的容量。（当前RAID 不可以）,image.png,https://community.zimaspace.com/t/raid1-disk-replacement-to-increase-capacity/6878,@Leo Chen,R 需求,,,,piranin,1,2025/11/14,,Mergerfs 和 SnapRAID 呼声 的 新人头
+"在App 设置面板中，未能看到 GPU enable 选项
+
+Jerry: 会修复这个问题",752e88f5625f186a4d5eb93cfec518854bc217c9.png,https://community.zimaspace.com/t/gpu-enable-option-missing-in-app-settings-panel-in-1-5-1/6898,@Jerry,已定位/知晓,,,,ASRTichy,1,2025/11/27,,
+快照/诊断脚本V1 - gelbuilding,image.png,https://community.zimaspace.com/t/zimaos-premium-snapshot-script/6918,cc 团队,S 信号,,,,gelbuilding,1,2025/11/17,,
+希望ZimaOS 提供类似的功能,image.png,https://community.zimaspace.com/t/this-would-help-both-users-and-staff/6935/,cc 团队,"S 信号, R 需求",,,,MjTech,1,2025/11/17,,
+"喜欢理由和一些建议：
+
+1. 实现磁盘空间监控系统（例如 WinDirStat）
+2- ZimaOS 启动时能够自动启动虚拟机，可以选择启动哪些虚拟机，而不是全部虚拟机。
+3- 使从操作系统内部实现 HTTPS 变得容易，证书管理自动处理，并且默认情况下为所有系统容器启用此选项。
+4- 能够像共享文件夹一样共享整个磁盘和取消共享 ZimaOS-HD，这是一个很棒的功能。","DeBqj.jpg,image.png,image.png",https://community.zimaspace.com/t/auto-start-a-vm-iniciar-vm-en-automatico/6860/8,@Leo Chen cc 团队,"S 信号, R 需求",,,"windirstat 的理由
+ZVM 启动了啥",lolero,1,2025/11/27,,
+"断电约 1 分钟。系统重启后，所有已挂载的 USB 外置驱动器都被重命名，名称后缀为“-2”。
+
+再次重启后，名称还能恢复。",3ed42baa936cada653b0042087a0fab6d85b6b89.png,https://community.zimaspace.com/t/all-usb-drives-with-re-mount-as-a-new-name/6912/3,@Rally,待/判断/中,,,,ac.crusade,1,2025/11/17,,
+"初尝试 ZimaOS 就有功能建议：
+
+1. ZimaOS 配置备份和恢复工具，可以将配置导出并导入到另一台 ZimaOS 设备。如果它也能支持 Docker 应用就更好了。
+2 - NFS 的 GUI 集成（启动、停止、导出文件处理）。
+3 - 一个兼容 rsync 的备份工具，用于将文件从一台 Zimaos NAS 备份到另一台。打造一台合适的备用设备。
+
+4 - 备份docker 应用","image.png,image.png",https://community.zimaspace.com/t/features-request-zimaos-backup-standby-zima-nas-nfs-in-gui/6933/2,@Leo Chen,"S 信号, R 需求",,,,albator,1,2025/11/17,,
+开机启动虚拟机,image.png,https://community.zimaspace.com/t/we-need-feedback-on-zvm/1881/29,@Leo Chen,R 需求,虚拟机,,,sny,1,2025/11/17,,虚拟机在开机后启动
+"功能请求：
+
+集成 Midnight Commander
+
+原因是：",image.png,https://community.zimaspace.com/t/feature-request-mc-midnight-commander/6939/4,@Leo Chen,R 需求,,,,Harryd,1,2025/11/17,,
+第七盘， 磁盘未能按照期望显示,6674035f3ec0b14b3a2b8395993fac1c2e2e2644.jpeg,https://community.zimaspace.com/t/nvmevm-2-ssd-stick-not-showing-in-web-ui/6967,"@Rally
+@Dina（丁雯）",已定位/知晓,,第七盘错位，解决方法是删除local-storage.conf中的nvme值让系统接管,,blacksunix,1,2025/11/17,,
+ZFS GUI,image.png,https://discord.com/channels/884667213326463016/1251135320825794640/1439220273789534219,,R 需求,,,在哪里知道，get 的时候，Btrfs 和 RAID 构建的,,0,2025/11/17,,ZFS GUI 支持。快照支持。
+U盘启动 ZimaOS的适配,image.png,https://community.zimaspace.com/t/recommandations-for-zimaos-running-from-a-usb-drive/6559/5,,R 需求,,,,vipper_666,1,2025/11/18,,
+如果能实现快照功能，可能会让部分PVE 用户彻底转向 ZimaOS,image.png,https://community.zimaspace.com/t/recommandations-for-zimaos-running-from-a-usb-drive/6559/7,,S 信号,,,,vipper_666,1,2025/11/18,,
+"电脑端Client
+
+问题：很多时候都显示正在备份，仿佛卡住了。但目的位置文件大小和数量不变。
+
+需求： 备份时间的可设置",image.png,https://community.zimaspace.com/t/how-do-zima-client-backups-work-in-detail/6845/6,"@Rally
+
+@Leo Chen","重要, R 需求",,"看起来你的 C 盘/用户/所有者文件夹里有些文件无法成功备份，可能是因为文件权限不足，C 盘的所有者文件夹里包含了什么？
+
+之后，我们将支持在权限不足的情况下备份这些文件，如果备份失败，也会显示那些未能通过备份的具体文件，并让您可以选择如何处理这些文件（例如：跳过/重试）。
+
+客户端现有的备份逻辑是，如果文件未能备份，文件会被重新尝试，所以你会看到它始终处于备份状态。然后客户端备份会一直监听你的文件变更，一旦有文件变更，它会立即触发增量备份。其次，每天凌晨1点会自动执行增量备份，以防止遗漏备份（我们将优化至未在每天凌晨1点或每周一次的目录）",,wferrell54,1,2025/11/18,,
+"ZimaOS 1.5.1
+
+硬盘的休眠功能未按预期： 每30分钟，可能会唤醒2 秒钟。",image.png,https://community.zimaspace.com/t/disk-spindown-interuption-not-working-issue-still-exists/6999,@Rally,待/判断/中,,,,Less,1,2025/11/18,,
+MOD 提供的系统备份的一个脚本，并建议我们实施。,image.png,https://community.zimaspace.com/t/tutorial-zimaos-backup-and-restore-using-usb-drive-shared-by-gelbuilding/7015,@田依可,"S 信号, R 需求",,,,gelbuilding,1,2025/11/19,,
+"Btop 在1.5.1 和1.5.2beta2 出现不能工作的情况
+
+单例",bf1245fcc2945696f6a9d478da63dfa9186c0c0b.jpeg,https://community.zimaspace.com/t/btop-does-not-work-in-1-5-1-on-hp-microserver-g7-amd-n40l-cpu/7019/2,@Rally,待/判断/中,,,,jlindeberg,1,2025/11/20,,
+Files 中，容量显示问题。,image.webp,https://discord.com/channels/884667213326463016/1251135424303337524/1440035284904444056,@Rally,待/判断/中,,1.5.1 应该修了，如果没有那应该在1.5.2 beta 修了,,AWPAndreas,1,2025/11/20,"上次类似问题。
+
+周计划",
+从群晖转换到ZimaOS 的具体理由,image.png,https://community.zimaspace.com/t/nordvpn-setup-on-nas/7024/3,"@Leo Chen
+
+cc
+
+团队","S 信号, R 需求",,VPN 标准协议。,,macgneto,1,2025/11/20,,
+用户认为，添加cp850 字符集，可以改进samba 在KDE 下的兼容性,image.png,https://community.zimaspace.com/t/not-a-zimaos-issue-but-kde-samba-shares-and-error-msg-dos-charset-cp850-unavailable-using-ascii/6455/5,@Leo Chen,"R 需求, 修复中",,,"@Jerry ：我们会尽快修复
+",Harryd,1,2025/11/21,,
+"1、子账户也能自己选用合适的云空间进行访问。
+2、子账户也能往自己的云空间进行备份。",image.png,,"@Leo Chen
+","R 需求, S 信号",,,,@albertgutierrez886,1,2025/11/21,,
+https 端口 会被意外重置。,image.png,https://community.zimaspace.com/t/https-port-resets-each-restart/7042,@Rally,待/判断/中,,怀疑是该配置文件损坏,,DrMarlin,1,2025/11/21,,
+"2. 系统自带的照片应用其实没必要，因为“文件”应用就能很好地显示照片。如果你想要更多功能，那就需要像 Immich 这样的应用。我安装 Immich 的时候也遇到了一些问题，不过最终还是成功运行了。
+3. Mega 除了用于一些不法用途外，并没有太多其他用途。你可以手动安装 Mega 的 Docker 容器。我不建议 Zima 团队为 Mega 添加原生同步功能。云存储和同步方面有很多其他选择。
+4. 我认为 Casa 商店和其他社区商店里的大多数应用都能开箱即用。你可能需要搜索一些资料来正确设置它们，或者根据你的特定需求进行设置。",image.png,https://community.zimaspace.com/t/option-i-wish-to-be-add-to-zimaos/7046/2,@Leo Chen,S 信号,,,在哪里知道fnos 的？保护一下,"goultron,snow2999",2,2025/11/21,,
+1.5.2 beta3 无法保存头像,image.png,https://community.zimaspace.com/t/zimaos-1-5-2-beta3-unable-to-save-avatar/7059,@Jerry,待/判断/中,,,,Syko1,1,2025/11/24,,
+Board 2 / emmc 用户看到了可以对系统盘分区进行存储创建的选项,image.png,https://discord.com/channels/884667213326463016/943513030497558598/1442088845557633075,"@Jerry
+
+@Rally",重要,,这是zimaboard emmc的问题，我们在接口或者前端需要做一下过滤,,,0,2025/11/21,,
+在存储空间计算方面，用户觉得困惑,image.png,https://community.zimaspace.com/t/zimaboard2-not-displaing-used-storage-correctly-in-dashboard/7065/2,@Leo Chen @Rally,已定位/知晓,,,,"mudithaliyanagama,ZiT69",2,2025/11/24,https://community.zimaspace.com/t/used-storage-not-displaying-right-amount/7070,在存储空间计算方面，用户觉得困惑
+"Board 832 用户：
+
+CasaOS 会显示27GB， ZimaOS 显示17.7 GB",38f132be0c270cbc3a6fb4e8921f0a8003f53901.png,https://community.zimaspace.com/t/fresh-install-of-zimaos-1-5-1-on-zimaboard-832-shows-emmc-storage-as-17-7-gb/7082,@Leo Chen,已定位/知晓,,,,mudithaliyanagama,1,2025/11/24,,在存储空间计算方面，用户觉得困惑
+如果我创建了一个包含重要数据的双磁盘阵列（RAID 1），在将设备更新（重新刷写）到新操作系统后，我还能访问这些数据吗？,image.png,https://community.zimaspace.com/t/sharing-folders-and-files-with-other-users-over-the-internet-is-this-possible/7034/5,@Leo Chen,"S 信号, R 需求",,,,Serg,1,2025/11/24,,
+支持添加iCould Drive 作为云盘,"image.png,image.png",https://community.zimaspace.com/t/native-icloud-drive-support-in-file-manager-external-sources-dropdown/7096,@Leo Chen,R 需求,,,,"MVvdV,dropn9ne,Piscopoe007",3,2025/11/24,,
+无法配置我的 4 个以上的磁盘或 4 个以上的用户,image.png,https://community.zimaspace.com/t/can-not-user-create-over-4-disks-users/7114/,@Rally,重要,,"等待用户回复消息,用户未返回错误截图",,Nonurt,1,2025/11/25,用户未回复,
+"小组件也能支持 AMD
+
+btop 提供正确的温度和功耗数据，
+但是 Ryzen 7 Pro 8845HS 在您的仪表盘窗口中将无法正确显示为受支持。",image.png,https://community.zimaspace.com/t/zima-os-1-5-2-beta-sensor-power-detection-temperatur-on-dashboard-ryzen-7-8845hs/7119,@Jerry,R 需求,,,,Aerokue,1,2025/11/26,,
+"我会这样描述这个功能：它集成了 Google 云端硬盘共享空间（Google Workspace），而不仅仅是“我的云端硬盘”。
+
+这是因为我有这样的需求/工作流程：备份整个 Google 云端硬盘。",image.png,https://community.zimaspace.com/t/googledrive-shared-spaces/7121/2,@Leo Chen,R 需求,,,,of87,1,2025/11/26,,
+ZimaOS 更可靠，也更适合我的需求，尽管它缺少一些功能，例如默认的 AI 照片管理和 FTP 功能。ZimaOS 非常出色，而且通过它的移动应用，我可以远程访问我的文件——而 FNOS 需要注册一个中国手机号码才能实现这一点。ZimaOS 没有这个限制。它唯一的缺点是某些应用需要特殊的设置才能运行，而且我还在学习 Docker 的使用。此外，我还可以在 ZimaOS 上访问我的 Google Cloud，而 FNOS 直到最近才添加了这项功能。总而言之，我决定继续使用 ZimaOS，因为它功能强大，而且技术支持响应迅速。,image.png,https://community.zimaspace.com/t/option-i-wish-to-be-add-to-zimaos/7046/3,@Leo Chen,S 信号,,,,snow2999,1,2025/11/26,,"2. 系统自带的照片应用其实没必要，因为“文件”应用就能很好地显示照片。如果你想要更多功能，那就需要像 Immich 这样的应用。我安装 Immich 的时候也遇到了一些问题，不过最终还是成功运行了。
+3. Mega 除了用于一些不法用途外，并没有太多其他用途。你可以手动安装 Mega 的 Docker 容器。我不建议 Zima 团队为 Mega 添加原生同步功能。云存储和同步方面有很多其他选择。
+4. 我认为 Casa 商店和其他社区商店里的大多数应用都能开箱即用。你可能需要搜索一些资料来正确设置它们，或者根据你的特定需求进行设置。"
+"在CLI 中，Docker 手动创建的网络，无法被其他container 选用。
+
+Link: 这个需求还是很常见的。",50e5c6ab67b46c4bb19a59249ebacbd47644e5e2.png,https://community.zimaspace.com/t/bridge-network-does-not-allow-containers-to-talk-to-each-other/6910/20,"@Rally
+
+@Jerry",待/判断/中,,,,"xaddict,psdl,gelbuilding,Zima-Giorgio",4,2025/11/27,,
+ZimaOS webui 硬盘 温度和 CLI 不一致。,image.png,https://community.zimaspace.com/t/discrepancy-in-ssd-temperature-readings-zimaos-beta/7147,@Rally,待/判断/中,,,,delduca,1,2025/11/27,,
+小组件，存储容量信息更新不及时。,"9a08ecd1cbaf6abec5d1c6307b504dcadb9b9356.png,1d322c0b089de7f04e89cca768b617de2c6d67a1.png",https://community.zimaspace.com/t/after-installing-new-hds-and-expanding-raid-system-still-says-there-arent-space-left/7146,@Leo Chen,R 需求,,,,victor,1,2025/11/27,,在存储空间计算方面，用户觉得困惑
+如何将远程的Samba 目录，传递给Jellyfin？,image.png,https://community.zimaspace.com/t/help-zimaos-1-5-1-community-edition-how-to-work-with-remote-samba-shares/7151,@Leo Chen,"S 信号, R 需求",,,,f0xmuld3r,1,2025/11/27,,
+可以在 ZimaOS 控制面板上的备份应用程序中选择 USB 驱动器作为备份目标位置。但您无法在 Zima 客户端桌面版的备份功能中进行此操作。,image.png,https://community.zimaspace.com/t/can-t-back-up-to-external-drives/7157/5,@Leo Chen,"已定位/知晓, 修复中",,,,lolero,1,2025/11/27,,
+UPS 似乎未能按预期工作。,image.png,https://community.zimaspace.com/t/zimaos-1-5-2-release/7144/2,@Rally,待/判断/中,UPS,"待排查服务状态和按钮状态不一致问题,同上",,"Harryd,marco_28492",2,2025/11/27,,
+mc 指令由于默认不能创建配置文件，目前在 root 下才能直接试用。用户反馈了改进方案 并期待改进。,image.png,https://community.zimaspace.com/t/feature-request-mc-midnight-commander/6939/12,@Jerry,"已定位/知晓, 修复中",,,,"gelbuilding,Harryd",2,2025/11/27,,
+Gelbuilding 希望实现一个将系统盘 备份和恢复 的工具/教程。他想了解一些其他信息。Jerry 哥已经答疑，并回复了最简单，最迅速的方式就是dd,image.png,,@Jerry,已定位/知晓,,,,gelbuilding,1,2025/11/27,,
+"在老iMac 上安装，也能让屏幕关闭。
+
+用户反馈了 xset 或 dmps  工具",image.png,https://community.zimaspace.com/t/how-to-turn-off-imac-2012-screen/7135/3,@Jerry,"S 信号, R 需求",,,,rup,1,2025/11/28,,
+共享整个 USB drive / U盘,image.png,https://community.zimaspace.com/t/located-can-t-use-zima-client-desktop-version-to-back-up-data-from-pc-to-the-usb-connected-drivers-on-zimaos/7157/7,@Leo Chen,R 需求,,,,lolero,1,2025/11/28,,
+USB 硬盘也能运行容器。（迁移路径功能）,image.png,https://community.zimaspace.com/t/usb-hard-drive-is-not-recognized-as-main-system-storage/7167,@Leo Chen,R 需求,,,,JeHoBo,1,2025/11/28,,
+问题同上。,image.png,https://community.zimaspace.com/t/how-to-set-my-usb-external-drive-as-a-windows-backup-drive/7170,@Leo Chen,"已定位/知晓, 修复中",,,,Mithrandir64,1,2025/11/28,,可以在 ZimaOS 控制面板上的备份应用程序中选择 USB 驱动器作为备份目标位置。但您无法在 Zima 客户端桌面版的备份功能中进行此操作。
+1.5.2 中 文件数量显示 10000 （实际有7W）,93ab2364b649eb0237ecdf4de05716abd79b43d8.png,https://community.zimaspace.com/t/files-app-maximum-of-10-000-items-viewable/5239/6,@Rally,待/判断/中,,"已知问题,预计153",,jvaudio,1,2025/11/28,,
+"关于yundera 流向中文群内这件事
+
+起因：Cp 在寻找将CasaOS 包成Docker ，然后在其他发行版里面安装CasaOS，实现 用CasaOS 管理Docker 的目的。（比如在群晖，在Unraid）
+
+探索发现项目已经实现：https://github.com/worph/casa-img
+
+在项目中标注了赞助者是yundera",image.png,,cc 团队,S 信号,,,,Cp0204,1,2025/11/28,,
+关机面板似乎依然存在 UI 问题。,image.png,https://community.zimaspace.com/t/zimaos-beta-1-5-2-not-shutting-down/7176/2,@Rally,待/判断/中,,,,dreadylock58,1,2025/11/28,,浏览器缓存导致的UI 异常。
+在BIOS 系统上安装ZimaOS。 文章分享（获得授权）,,https://community.zimaspace.com/t/tutorial-how-to-install-zimaos-over-bios/7177/2,cc 团队,S 信号,,,,Albert Gutiérrez Muñoz,1,2025/11/28,,
+喜欢ZimaOS的理由，建议,image.png,https://community.zimaspace.com/t/located-can-t-use-zima-client-desktop-version-to-back-up-data-from-pc-to-the-usb-connected-drivers-on-zimaos/7157/11,@Leo Chen,S 信号,,,,lolero,1,2025/11/28,,可以在 ZimaOS 控制面板上的备份应用程序中选择 USB 驱动器作为备份目标位置。但您无法在 Zima 客户端桌面版的备份功能中进行此操作。
+UPS 未能按预期工作（但是在beta 中工作正常,image.png,https://community.zimaspace.com/t/zimaos-1-5-2-ups-management/7182,@Rally,待/判断/中,UPS,???问号文件问题,,Mich795,1,2025/12/01,,
+显示已经成功，但界面上的开关未能正确显示,image.png,https://community.zimaspace.com/t/ups-doesnt-seem-work-properly-in-zimaos-1-5-2-release/7144/8,@Rally,待/判断/中,UPS,"待排查服务状态和按钮状态不一致问题,同上",,"blackoes,romeyde",2,2025/12/01,,
+系统盘的存储空间异常,image.png,https://community.zimaspace.com/t/where-is-my-storage-space/7216,@Rally,已定位/知晓,,,,avexel,1,2025/12/02,,
+UPS 失效,image.png,https://discord.com/channels/884667213326463016/1166619138521829396/1446416232864808993,@Rally,已定位/知晓,,已发版修复,,贵,1,2025/12/02,,
+"ZimaOS 启动画面。(静默启动，展示Logo ，但不显示过多的命令）
+
+传递友好和易用性的启动画面。
+
+Plymouth
+",image.png,https://community.zimaspace.com/t/feature-request-splash-screen-for-zimaos/7203,"@Leo Chen
+
+@Jerry Liu","S 信号, R 需求",,,,t404owo,1,2025/12/02,"Plymouth
+
+https://www.youtube.com/watch?v=h65n7Y3nq04
+",
+"回收站功能相关功能请求
+
+1、特定文件夹，禁用回收站功能
+2、回收站，按照条件清空：设置定时清空（X 天/周/月/年后清空）",image.png,https://community.zimaspace.com/t/disable-trash-feature-for-certain-folders/7208,@Leo Chen,R 需求,,,,"dropn9ne,recipe-farrow.4i",2,2025/12/01,,
+官方增加对 Ugreen LED 控制器的原生支持,image.png,https://community.zimaspace.com/t/feature-request-native-integration-of-ugreen-leds-controller-for-ugreen-hardware/7227,"@Leo Chen
+
+@Jerry Liu","R 需求, S 信号",,@Jerry Liu 后续计划支持 ZimaOS 的 mod 包，以便可以通过命令行安装。,,olife,1,2025/12/02,,
+"需求：
+1、特定文件夹，禁用回收站功能
+2、回收站，按照条件清空：设置定时清空（X 天/周/月/年后清空）
+
+背景：用户的 NVR（网络录像机） 使用 ZimaOS 的 SMB 来存储录像、截图与快照。且NVR 会自动删除旧的录像文件以释放空间。
+
+问题：
+NVR 删除大量录像导致回收站被疯狂塞满，用户体感Files页变卡、且需要用户不断手动清空。",image.png,https://community.zimaspace.com/t/disable-trash-feature-for-certain-folders/7208,@Leo Chen,"S 信号, R 需求",,smb服务下增加选项,,,0,2025/12/03,,
+"ZimaOS 添加链路聚合
+
+用户故事：用 ZimaOS 搭建一个媒体服务器（跑 Jellyfin 和一些虚拟机），会有多人同时访问。如果没有链路聚合，网络带宽可能会在多人访问时出现瓶颈；而链路聚合可以把多条网口的带宽叠加，让服务器在多人读写、视频编辑等高流量场景下更顺畅。",image.png,https://community.zimaspace.com/t/link-aggregation/7318,@Leo Chen,"S 信号, R 需求",,,,Miguel-Oops486,1,2025/12/04,,
+升级到1.5.3后，RAID 无法自动挂载，需要手动挂,image.png,https://community.zimaspace.com/t/raid-storage-not-mounted-after-upgrade-to-1-5-3/7369,@Rally,已定位/知晓,,raid数据库 fs_type 的值大写，导致挂载失败,,badbadtz,1,2025/12/10,,
+"
+无法点击添加文件夹",image.png,https://discord.com/channels/884667213326463016/1251135424303337524/1448967718513545227,@Rally,修复中,,已修复,,Jindosh,1,2025/12/10,,
+Btop温度和小组件的温度显示不一致,img_v3_02t0_6c1709a7-9c41-4c8f-865d-dcc272b8a5bg.jpg,https://discord.com/channels/884667213326463016/1251135320825794640/1449737666974187632,@link,已定位/知晓,,原因：amd cpu的传感器获取方式不对,,,0,2025/12/13,,
+DAS设备四个磁盘只识别三个，正在购买设备测试ing,image.png,https://community.zimaspace.com/t/not-seeing-all-hdds-in-external-das/7321,@Rally,待/判断/中,,,,pantonc,1,2025/12/12,,
+"添加更多第三方云盘：
+RaiDrive
+iDrive（备份）",image.png,https://community.zimaspace.com/t/adding-raidrive-cli-to-zimaos/7397,@Jerry Liu,"S 信号, R 需求",,,,_paul3000,1,2025/12/12,,
+ZB2支持 2FA set up,image.png,https://community.zimaspace.com/t/securing-zimaboard-2-2fa-setup-and-zerotier-vs-vpn-comparison/7316,@Leo Chen,"S 信号, R 需求",,,,rocky,1,2025/12/12,,
+Samba 共享中，希望为“特定用户”提供读/写权限，但禁止其删除文件或文件夹。,image.png,https://community.zimaspace.com/t/samba-share-zimaos-specific-user-preventing-delete-with-read-write-access/7396,@Leo Chen,"S 信号, R 需求",,,,,0,2025/12/12,,
+" ZimaOS能在Ultra 系列芯片上安装 X2",image.png,https://discord.com/channels/884667213326463016/1251135320825794640/1447326564499980389,@Jerry Liu,"S 信号, R 需求",,,,,0,2025/12/12,,
+"ZimaCube 固件更新开启 ReBAR，让 Intel Arc GPU 能正常发挥性能
+
+ps：ReBAR 是什么：
+一种 PCIe 特性，让 CPU 能一次性访问全部 GPU 显存，对 Intel Arc GPU 来说几乎是“必需功能”。",image.png,https://discord.com/channels/884667213326463016/1249155433885732884/1451211035972206716,@Cain,R 需求,,,,,0,2025/12/16,,
+ZimaBoard 2 在 BIOS 中增加对网络启动（PXE Boot）的支持,image.png,https://community.zimaspace.com/t/zimaboard-2-bios-network-boot-feature-requested/7417,@Cain,R 需求,,,,,0,2025/12/17,,
+Google Drive 连接不稳定,img_v3_02t7_6c4026a5-b8c1-478a-abbb-276142311b9g.jpg,https://discord.com/channels/884667213326463016/1251135424303337524/1452394940356231209,@Link,待/判断/中,,,,,0,2025/12/17,,
+"备份 docker 文件失败 X2
+
+本质上用户想要备份整个docker应用，包含：compose文件+真实数据+App data+安装包（非必要）",img_v3_02t2_13d36b3a-7928-4522-be01-36c29c9f7b1g.jpg,,@Rally,"S 信号, 已定位/知晓",,,,,0,2025/12/20,,
+添加Intel ARC A310 GPU，无法启动ZimaOS,image.png,https://community.zimaspace.com/t/zimaos-initialization-failure-after-added-gpu/7487,@Jerry,待/判断/中,,,,,0,2025/12/19,,
+" Zima App未正确适配屏幕
+Pixel 10 Pro XL","image.png,image.png,image.png",https://discord.com/channels/884667213326463016/1251135424303337524/1451435593073426516,@田依可,已定位/知晓,,,,,0,2025/12/19,,
+添加 iGPU / GPU 使用情况小组件，转码有需求,image.png,https://community.zimaspace.com/t/add-igpu-gpu-usage-next-to-cpu-ram/7568,@Jerry,"S 信号, R 需求",,,,,0,2025/12/24,,
+"第七盘显示不正确 X2
+
+原因：index逻辑有问题
+","img_v3_02t8_7107c98d-ae23-45aa-b0c4-f51eb2e5f87g.jpg,image.png",https://discord.com/channels/884667213326463016/1249155433885732884/1452686561375158485,@Rally,已定位/知晓,,,,,0,2025/12/25,,
+"忘记用户名密码，且忘记root密码
+
+已解决：进救援模式删除用户数据库文件",,http://邮件,@Rally,已定位/知晓,,,,,0,2025/12/25,,
+"ZimaOS1 的 RAID 装到ZimaOS2 上，希望自动识别并启用 
+
+用户故事：我的ZimaOS1坏了，我重装了ZimaOS ，我想在新的ZimaOS上用我旧的RAID",image.png,https://github.com/IceWhaleTech/ZimaOS/issues/180,@Leo Chen,"S 信号, R 需求",,,,,0,2025/12/25,,
+"将ZimaOS 出现在  location中
+
+用户故事：我觉得这样更方便。QNAP是可以的。而且，图标的显示也更容易区分哪个是 ZimaCube 的 IP 地址，哪个是 SMB IP 地址。
+它不需要登录或设置，因为它直接使用应用程序中的信息。So easy for new users","image.png,image.png",http://私信,@田依可,"S 信号, R 需求",,,,,0,2025/12/25,,
+ZVM在HTTPS 下无法启动,image.png,https://discord.com/channels/884667213326463016/1251135390203777124/1456498669019729971,@Jerry Liu,已定位/知晓,,,,,0,2025/12/30,,
+mt7925 网卡驱动,,https://community.zimaspace.com/t/driver-wi-fi-mediatek-not-work/7293/6,@Jerry Liu,R 驱动需求,,已添加,,,0,2025/12/30,,
+请求内核升级到6.18，实现更多的硬件兼容,image.png,https://community.zimaspace.com/t/6-18-kernel-version-for-broader-hardware-compatibility/7726,@Jerry Liu,S 信号,,,,,0,2026/01/04,,
+手机端APP下载照片，不知道下到哪里了,screen-20260103-175906.mp4,http://私信,@田依可,已定位/知晓,,,,,0,2026/01/04,,
+"重启ZB2时，SMB服务需要重新挂载
+
+现状",image.png,https://community.zimaspace.com/t/problem-with-smb-shares/7727,@Leo Chen,"S 信号, 已定位/知晓",,今年会添加更多的文件服务协议：虚拟盘同步盘那种网盘体验的功能，会用http或者私有协议,,,0,2026/01/04,,
+"ZimaBlade通电后指示灯亮，但无视频信号输出
+案例 X4，最近频率高","image.png,image.png",https://discord.com/channels/884667213326463016/1146850558515351582/1457153033778499645,@Cain,待/判断/中,,,,,0,2026/01/04,,
+"加密文件夹产品反馈：
+两个人问不知道入口在哪里？",img_v3_02tp_3a9022b4-88f7-438b-97a8-69b4d112588g.jpg,http://邮件+私信,@Leo Chen,反馈,文件加密,,,,0,2026/01/05,,
+"能不能做到加密现有文件夹？ X1
+当前数据也很重要，现在只能复制粘贴",,http://私信,@Leo Chen,"R 需求, 反馈",文件加密,,,,0,2026/01/05,,
+"现象：加密文件夹无法删除
+原因：该用户不知道该文件夹处于smb共享中，所以没有删除按钮，预期释放删除按钮并加提示
+
+
+",image.png,https://community.zimaspace.com/t/encrypted-folder-the-first-alpha-feature-test-recruitment-on-the-zimaos-software-defined-storage-sds-roadmap/7791/4,@Leo Chen,反馈,文件加密,,,,0,2026/01/06,,
+当前只能在网页里的files解锁，无法在手机上、SMB上，或者其他地方,image.png,https://community.zimaspace.com/t/encrypted-folder-the-first-alpha-feature-test-recruitment-on-the-zimaos-software-defined-storage-sds-roadmap/7791/4,@Leo Chen,反馈,文件加密,,,,0,2026/01/06,,
+SMB 锁定提示不足：锁定状态下文件夹显示为空，虽安全但界面上缺乏明确的“已锁定”提示，容易被误认为异常或损坏。,image.png,https://community.zimaspace.com/t/encrypted-folder-the-first-alpha-feature-test-recruitment-on-the-zimaos-software-defined-storage-sds-roadmap/7791,@Leo Chen,反馈,文件加密,,,,0,2026/01/06,,
+"有一个共享目录
+好几个人都有权限（比如家人 / 同事）
+他在里面建了一个“加密文件夹”
+只要他自己一解锁
+那么：
+其他所有有共享权限的人
+都能通过 SMB 直接看到、复制、删除里面的东西
+失去了加密的意义
+
+tips：154可以取消共享整个目录",,https://community.zimaspace.com/t/encrypted-folder-the-first-alpha-feature-test-recruitment-on-the-zimaos-software-defined-storage-sds-roadmap/7791/4,@Leo Chen,反馈,文件加密,,,,0,2026/01/06,,
+"是否可以通过 脚本 / CLI / API 解锁加密文件夹
+ 这样就可以ssh解锁，无需必须打开UI",image.png,https://community.zimaspace.com/t/encrypted-folder-the-first-alpha-feature-test-recruitment-on-the-zimaos-software-defined-storage-sds-roadmap/7791/4,@Leo Chen,"R 需求, 反馈",文件加密,,,,0,2026/01/07,,
+上锁需要点两下，不方便,image.png,http://私信,@Leo Chen,反馈,文件加密,,,,0,2026/01/07,,
+手机App添加重启机器功能,image.png,https://community.zimaspace.com/t/mobile-app-extra-features/7856,@田依可,R 需求,手机App,,,,0,2026/01/10,,
+" 搜索功能需求：
+1.添加日期筛选
+2.支持预览文件，采用分屏（Split View）界面设计，左侧：搜索结果，右侧文档预览","image.png,image.png",https://community.zimaspace.com/t/search-ux-suggestion-for-improvement/7821/3,@Leo Chen,R 需求,搜索,,,,0,2026/01/10,,
+Zima 系列设备（Zimaboard、ZimaBlade）存在统一 UUID 和默认序列号的问题,image.png,https://discord.com/channels/884667213326463016/918710540438749235/1458075977535062016,@Cain,已定位/知晓,,,,,0,2026/01/11,,
+"google 云盘断连，并且无法取消 X2 
+先用命令垫一层，等后续优化",image.png,https://community.zimaspace.com/t/google-drive-is-not-mounted-after-some-time/7886,@Rally,已定位/知晓,第三方云盘,,,,0,2026/01/13,,
+"用户从群晖迁移文件和数据，希望保留原有的文件时间戳（元数据）X2
+
+smb是保留的，上传拖拽是新日期",image.png,http://邮件+私信,,"S 信号, R 需求",Files,,,,0,2026/01/13,,
+"1.5.3 不能扩容RAID5
+
+想将 RAID6 从 5 块 4TB 的硬盘扩展到 6 块。","image.png,image.png,image.png",https://community.zimaspace.com/t/can-t-expand-raid-zimaos-v1-5-3/7874/4,@Rally,"已解决, 已定位/知晓",RAID,,,,0,2026/01/14,,
+1.5.3 RAID1 无法挂载,image.png,http://邮件,@Rally,已定位/知晓,RAID,,,,0,2026/01/14,,
+zimaos 安全漏洞,image.png,https://www.sentinelone.com/vulnerability-database/cve-2026-21891/,@Link,已回复,安全漏洞,"1. 回复社区
+2.邮件联系对方，请求更新状态",,,0,2026/01/16,,
+请求升级Docker Engine到29 版本,image.png,https://endoflife.date/docker-engine,@Jerry,已定位/知晓,,同内核6.18一起升级，需要时间测试,,,0,2026/01/16,,
+右键和三个点中添加文件夹加密 锁定/解锁 状态,image.png,http://私信,@Leo Chen,R 需求,Files,,,,0,2026/01/16,,
+在加密子文件夹选择上锁，会提示找不到加密文件夹，并且导航名称为子文件夹名称,"image.png,image.png",http://私信,@Rally,已定位/知晓,Files,,,,0,2026/01/16,,
+通过ZimaOS 控制第七盘灯光,image.png,http://私信,"@Cain
+@Link Liang",R 需求,,,,,0,2026/01/20,,
+通过ZimaOS 控制风扇转速,image.png,http://私信,"@Cain
+@Link Liang","R 需求, S 信号",,,,,0,2026/01/21,,
+"每次重启会引导重新建立新用户
+
+原因：第八分区未挂载",Aufzeichnung_2026-01-23_113313 (1).mp4,http://邮件,@Rally,已解决,,,,,0,2026/01/22,,
+"1.5.3创建的RAID1未挂载
+
+1.5.4beta已修复",image.png,http://私信,@Rally,已解决,,,,,0,2026/01/22,,
+"RAID1 恢复
+
+已给脚本解决 ",image.png,http://私信,@Rally,已解决,,,,,0,2026/01/23,,
+安卓端每15分钟提醒一次远程连接成功,img_v3_02ua_888541ba-ecd7-4f9b-987b-ec4988ff319g.jpg,https://community.zimaspace.com/t/language-inconsistentencies-in-the-zimaos-companion-app-for-android/7933/5,@田依可,已定位/知晓,,,,,0,2026/01/23,,
+多用户权限隔离,image.png,https://community.zimaspace.com/t/have-an-true-nice-acces-management/7973,@Leo Chen,R 需求,,,,,0,2026/01/27,,
+2FA 双重验证,image.png,https://discord.com/channels/884667213326463016/892293706730848266/1465494093504446641,@Leo Chen,R 需求,,,,,0,2026/01/27,,
+扩展ZVM存储空间,image.png,http://私信,@Leo Chen,R 需求,,,,,0,2026/01/27,,
+immich应用更新到v2.5.2 版本,image.png,https://community.zimaspace.com/t/immich-v2-0-1-when-will-it-be-updated-in-the-app-store/6275/4,@Link Liang,R 需求,,,,,0,2026/01/28,,
+"用户想把1TB视频备份到其他NAS设备上（SMB），现象：备份卡死，系统盘爆满
+
+原因：ZimaOS 无法在 NAS 共享的“根目录”创建新文件夹，所以全部传到了本地磁盘中",image.png,http://邮件,@Rally,已解决,,,,,0,2026/01/28,,
+JBOD进展,image.png,https://discord.com/channels/884667213326463016/1251135424303337524/1467101826376794206,@Leo Chen,S 信号,,,,,0,2026/01/30,,
+"挂载RAID失败+RAID恢复
+
+1.升级解决
+2.脚本解决",,,,"已定位/知晓, 已解决",,,,,0,2026/01/30,,
+对喜欢的应用加tag 或者标签,image.png,https://discord.com/channels/884667213326463016/1251135320825794640/1466920705139413209,@Leo Chen,"S 信号, R 需求",,,,,0,2026/02/23,,
+"用户报告说：ZimaOS Files 通过 UPnP 自动创建端口映射，担心设备被暴露到公网
+
+已定位：Share Via Link的一个默认配置引起的，虽然隐藏了入口，但是实际功能是没有关掉的，在160会做改进",image.png,https://discord.com/channels/884667213326463016/1251135320825794640/1476087252391038987,@Link,已定位/知晓,,,,,0,2026/02/25,,
+对于北欧一些电费比较贵的国家，希望ZimaOS推出节能模式，关闭一些不必要的服务,image.png,,@Leo Chen,"S 信号, R 需求",,,,,0,2026/02/25,,
+用户希望能在不影响系统稳定性的前提下，安全禁用或移除像 ZVM 这类不需要的预装 Docker 应用，让系统更精简。,image.png,https://community.zimaspace.com/t/disable-remove-unused-docker-apps-like-zvm/8153,@Leo Chen,"S 信号, R 需求",,,,,0,2026/02/25,,
+"现象：Files无法使用
+原因：由于系统盘满导致files服务无法使用，需要使用ssh清空某些文件",image.png,https://discord.com/channels/884667213326463016/1251135320825794640/1475893773245354045,@Rally,已定位/知晓,,,,,0,2026/02/26,,
+"磁盘休眠不工作。
+
+用户给到了解决方案，希望官方尽快修复",img_v3_02v9_c4512d85-9954-4c1b-bfcf-2fa19bc17c1g.jpg,https://community.zimaspace.com/t/raid-disk-spindown-standby-not-working-as-described-reasons-and-workaround/8094/7,@Link,待修复,,,,,0,2026/02/26,,
+自定义重命名外部 USB 或云服务,image.png,https://community.zimaspace.com/t/how-to-rename-external-usb-or-cloud-service-labels-in-zimaos/8189,@Leo Chen@田依可,"R 需求, S 信号",,,,,0,2026/03/10,,
+"ZimaOS 是否支持被第三方 dashboard 集成？快捷入口
+
+用户故事：用户希望在像 Homer 这样的 Homelab 面板里加几个按钮，可以直接打开 ZimaOS 的设置、应用商店和备份页面。",image.png,https://community.zimaspace.com/t/third-party-dashboard-zimaos-integration/8192,@Leo Chen@田依可,"S 信号, R 需求",,,,,0,2026/03/11,,
+" Ultra 225芯片安装ZimaOS",image.png,https://discord.com/channels/884667213326463016/1251135424303337524/1481732493903270043,@Leo Chen@田依可,"S 信号, R 需求",,,,,0,2026/03/13,,
+"客户端 多设备切换管理
+
+手机端已支持等发版",image.png,https://community.zimaspace.com/t/zima-client-connecting-to-multiple-zimaboards/8187,@Leo Chen@田依可,"S 信号, R 需求",,,,,0,2026/03/13,todo,
+"用户故事：用户有两台ZimaOS设备，很容易搞错设备，现在他的解决方法是：给不同设备 设置不同壁纸。但他觉得这不够直观。
+
+希望Dashboard 上明显显示设备名称",image.png,https://community.zimaspace.com/t/zima-client-connecting-to-multiple-zimaboards/8187,@Leo Chen@田依可,"S 信号, R 需求",,,,,0,2026/03/13,,
+"系统盘克隆
+
+用户故事：用户现在系统盘不够用了，想把系统一模一样搬到一块更大的硬盘上，这样既能扩容，又不用重新安装系统和软件。",image.png,https://community.zimaspace.com/t/replacing-os-hard-drive-ssd-to-bigger-drive-zimaos-plus-activation/8224,@Leo Chen@田依可,"S 信号, R 需求",,,,,0,2026/03/13,todo,
+"在文件被SMB分享之后，不允许迁移时取消勾选保留原始文件
+
+用户说：迁移不允许他删除原文件。",Screen Recording 2026-03-17 at 11.53.54 AM.mov,http://私信,@Leo Chen@田依可,优化,,,,,0,2026/03/13,,
+"用户重装ZimaOS系统后，找我们用脚本帮忙恢复RAID5，恢复后用户想将系统盘Appdata等迁移到RAID5，提示目标路径不为空，用户不知道啥意思。
+实际原因：目的地有重名文件夹，用户需要重命名文件夹 or 修改数据库","img_v3_02vm_dc74920c-44c9-49c0-a092-dc3a36aac4eg.jpg,img_v3_02vm_e3fa7ea3-2ab4-4020-9806-8fcb8501452g.jpg",http://私信,@Leo Chen@田依可,优化,,,,,0,2026/03/13,,
+Storage 删除定义不清晰，单个不允许删，多选可以删,Screen Recording 2026-03-19 at 7.22.57 PM.mov,https://community.zimaspace.com/t/deleting-single-storage-in-files-browser-not-possible/8244,@田依可@Leo Chen,优化,,,,,0,2026/03/17,,
+8个磁盘组RAID 6 ，其中有一块坏盘，出现无法挂载的情况,"HmyebX3mUoQCkUxAaoyci5rGnLb.png,Hc1ibIHvFojfyjxeGj7cUzcInSe.png",http://邮件,@Rally,已定位/知晓,,,,,0,2026/03/17,,
+"1.5.4SMB失效 本周3个，160beta修复
+
+原因是1.5.4强制用 smb3 挂载，但是服务端可能是smb1/2，导致挂载不上",image.png,,@Rally,已解决,,,,,0,2026/03/17,,
+"ZimaCube 2 背板风扇异常 X3
+会在冷启动、热启动，或者运行数小时后，突然出现明显变大的风扇噪音。
+",image.png,http://内测群,@Cain,待/判断/中,,在让他们录视频，补充更多背景信息,,,0,2026/03/18,,
+手机App支持关机，用户不想每次打开网页关机,image.png,https://community.zimaspace.com/t/server-shutdown-from-mobile-app/8251,"@田依可
+@陈恒","S 信号, R 需求",,,,,0,2026/03/19,,
+通知中心，备份/磁盘发生异常情况，及时警告用户。,"image.png,image.png,image.png",https://community.zimaspace.com/t/feature-requests-notifications-push-email-telegrambot-discord/5637/3,@田依可@Leo Chen,"S 信号, R 需求",,,,,0,2026/03/19,,
+搜索可以搜索外部磁盘，例如USB,image.png,http://邮件,@田依可@Leo Chen,"S 信号, R 需求",,,,,0,2026/03/19,,
+"用户希望 ZimaOS 除了 Docker 和 ZVM/ 之外，能为高级用户提供一个更轻量的中间层方案，比如支持通过 CLI 使用 Incus/LXC。
+
+Incus/LXC 是一种比完整虚拟机更轻量、比 Docker 更接近完整系统环境的系统级容器方案。",image.png,https://community.zimaspace.com/t/could-we-get-support-for-a-full-container-format-of-some-sort-in-zimaos/8264,@Leo Chen@田依可,"S 信号, R 需求",,,,,0,2026/03/20,,
+希望 ZimaOS 的 UPS 功能支持网络联动 / NUT 集成,image.png,http://邮件,@Leo Chen@田依可,"S 信号, R 需求",,,,,0,2026/03/20,,
+"希望 ZimaOS 提供 LUN 和 iSCSI 的图形化管理能力，让用户可以不用 CLI，就能完成创建、映射、权限管理和状态监控。
+
+这个需求主要面向 SMB/企业客户的虚拟化、存储扩容、备份灾备 等场景。","image.png,image.png",http://私信https://community.zimaspace.com/t/managment-lun-and-iscsi-gui/8248,@Leo Chen@田依可,"S 信号, R 需求",,,,,0,2026/03/20,,
+"仅内测ZC2机器，share via link仍在启用，用户发现有通信行为。
+
+大货无影响","img_v3_02103_996598cd-6c8c-4f32-bc39-029ff304a2eg.jpg,image.png",https://discord.com/channels/884667213326463016/1477866834802774137/1485671279607676988,@Rally,已解决,,,,,0,2026/03/25,,
+"ZC2 标准版第七盘UI不显示，但可正常使用
+
+Cain哥已修复",image.png,http://私信,@Cain,已解决,,,,,0,2026/03/27,,
+GPU直通,"image.png,image.png",https://community.zimaspace.com/t/vm-gpu-passthrough-for-ai-and-hardware-acceleration/8281,@Jerry Liu,"S 信号, R 需求",,,,,0,2026/03/25,,
+小组件和btop信息不一致,image.png,https://discord.com/channels/884667213326463016/1477866834802774137/1486530380239470732,@Leo Chen,"待修复, 优化",,,,,0,2026/03/25,,
+"用户希望不要强制将 Zima-HD 添加到 Finder ，而是改为默认选中但允许用户取消选择。
+
+
+",image.png,http://私信,,优化,,,,,0,2026/03/26,,
+驱动支持 RTL8821CE M.2,image.png,https://community.zimaspace.com/t/support-for-realtek-rtl8821ce/6062,@Jerry Liu,R 需求,,,,,0,2026/03/25,,
+ZimaOS 与 Scrutiny 的硬盘健康判断不一致，ZimaOS 显示 Healthy，但 Scrutiny 已报盘有风险，加强smart判断逻辑,"image.png,image.png",https://community.zimaspace.com/t/zima-thinks-drive-healthy-scrutiny-says-its-failed/8274,@Leo Chen,优化,,,,,0,2026/03/25,,
+希望 Zima 桌面端优化启动逻辑，支持仅在菜单栏 / 系统托盘后台运行，而不是启动时自动弹出主窗口。,image.png,https://discord.com/channels/884667213326463016/1251135390203777124/1486670620488892476,@Leo Chen,优化,,,,,0,2026/03/26,,
+160 alpha1，三方设备dc变化，导致Plus丢失,image.png,http://私信,@Rally,已解决,,,,,0,2026/03/27,,
+160 beta： 新的 USB 管理功能检测设备后需手动进入存储界面点击“+”才能启用，用户普遍不知道,image.png,https://discord.com/channels/884667213326463016/1166619138521829396/1487095661819072643,@Leo Chen,优化,,,,,0,2026/03/27,,

@@ -1,0 +1,296 @@
+{% extends "base.html" %}
+
+{% block title %}{{ entry.title[:50] }} - IceWhale CRM{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <div>
+            <span class="tag tag-type-{{ entry.type_tag }}" style="margin-bottom: 8px; display: inline-block;">
+                {% if entry.type_tag == 'R' %}R - 需求 (Request)
+                {% elif entry.type_tag == 'Q' %}Q - 问题 (Question)
+                {% elif entry.type_tag == 'S' %}S - 信号 (Signal)
+                {% elif entry.type_tag == 'Tips' %}Tips - 技巧/教程
+                {% else %}{{ entry.type_tag }}{% endif %}
+            </span>
+            <h1 class="card-title" style="margin-top: 8px;">{{ entry.title }}</h1>
+        </div>
+        <div style="display: flex; gap: 8px;">
+            <a href="/entries/{{ entry.id }}/edit" class="btn btn-secondary">编辑</a>
+            <form method="post" action="/entries/{{ entry.id }}/delete" onsubmit="return confirm('确定要删除此条目吗？');" style="display: inline;">
+                <button type="submit" class="btn btn-danger">删除</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="detail-section">
+        <div class="detail-label">分析和 todo</div>
+        <div class="detail-value" style="white-space: pre-wrap; background: #f9fafb; padding: 16px; border-radius: 8px;">{{ entry.analysis_todo or '无' }}</div>
+    </div>
+
+    <div class="detail-section">
+        <div class="detail-label">社区 todo</div>
+        <div class="detail-value" style="white-space: pre-wrap; background: #f9fafb; padding: 16px; border-radius: 8px;">{{ entry.community_todo or '无' }}</div>
+    </div>
+
+    <div class="detail-grid">
+        <div class="detail-section">
+            <div class="detail-label">状态</div>
+            <div class="detail-value">
+                <span class="tag tag-status">{{ entry.status_tag }}</span>
+            </div>
+        </div>
+
+        <div class="detail-section">
+            <div class="detail-label">功能模块</div>
+            <div class="detail-value">{{ entry.feature_module or '-' }}</div>
+        </div>
+
+        <div class="detail-section">
+            <div class="detail-label">用户名字</div>
+            <div class="detail-value">{{ entry.user_name or '-' }}</div>
+        </div>
+
+        <div class="detail-section">
+            <div class="detail-label">相关人员</div>
+            <div class="detail-value">{{ entry.assignee or '-' }}</div>
+        </div>
+
+        <div class="detail-section">
+            <div class="detail-label">声量</div>
+            <div class="detail-value">{{ entry.volume }}</div>
+        </div>
+
+        <div class="detail-section">
+            <div class="detail-label">创建时间</div>
+            <div class="detail-value">{{ entry.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</div>
+        </div>
+
+        <div class="detail-section">
+            <div class="detail-label">更新时间</div>
+            <div class="detail-value">{{ entry.updated_at.strftime('%Y-%m-%d %H:%M:%S') }}</div>
+        </div>
+
+        <div class="detail-section">
+            <div class="detail-label">父记录</div>
+            <div class="detail-value">{{ entry.parent_record or '-' }}</div>
+        </div>
+    </div>
+
+    {% if entry.source_url %}
+    <div class="detail-section" style="margin-top: 24px;">
+        <div class="detail-label">来源链接</div>
+        <div class="detail-value">
+            <a href="{{ entry.source_url }}" target="_blank" style="color: #2563eb;">{{ entry.source_url }}</a>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if entry.knowledge_base_url %}
+    <div class="detail-section">
+        <div class="detail-label">知识库链接</div>
+        <div class="detail-value">
+            <a href="{{ entry.knowledge_base_url }}" target="_blank" style="color: #2563eb;">{{ entry.knowledge_base_url }}</a>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if entry.github_issue_url %}
+    <div class="detail-section">
+        <div class="detail-label">GitHub Issue</div>
+        <div class="detail-value">
+            <a href="{{ entry.github_issue_url }}" target="_blank" style="color: #2563eb;">{{ entry.github_issue_url }}</a>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if entry.notes %}
+    <div class="detail-section">
+        <div class="detail-label">备注</div>
+        <div class="detail-value" style="white-space: pre-wrap; background: #f9fafb; padding: 16px; border-radius: 8px;">{{ entry.notes }}</div>
+    </div>
+    {% endif %}
+
+    {% if entry.attachments %}
+    <div class="detail-section" style="margin-top: 24px;">
+        <div class="detail-label">附件图片</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px;">
+            {% for attachment in entry.attachments %}
+            <a href="{{ attachment }}" target="_blank" style="display: block;">
+                <img src="{{ attachment }}" alt="attachment" style="width: 150px; height: 150px; object-fit: cover; border-radius: 8px; border: 1px solid #e5e7eb;">
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    {% if entry.source_type %}
+    <div class="detail-section" style="margin-top: 24px; padding-top: 24px; border-top: 1px solid #e5e7eb;">
+        <div class="detail-label">来源信息</div>
+        <div class="detail-value" style="font-size: 13px; color: #6b7280;">
+            来源类型: {{ entry.source_type }}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Collaboration Info -->
+    <div class="detail-section" style="margin-top: 24px; padding-top: 24px; border-top: 1px solid #e5e7eb;">
+        <div class="detail-label">协作信息</div>
+        <div class="detail-value" style="font-size: 13px; color: #6b7280;">
+            <div>版本: {{ entry.version }}</div>
+            {% if entry.last_edited_by %}
+            <div>最后编辑者: {{ entry.last_edited_by }}</div>
+            <div>最后编辑时间: {{ entry.last_edited_at.strftime('%Y-%m-%d %H:%M:%S') }}</div>
+            {% endif %}
+            {% if entry.is_being_edited %}
+            <div style="color: #dc2626; margin-top: 8px;">
+                正在被编辑 (会话: {{ entry.edited_by_session }})
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Real-time Collaboration Panel -->
+    <div class="card" style="margin-top: 20px;">
+        <div class="card-header">
+            <h3 class="card-title">实时协作</h3>
+            <span id="connection-status" style="font-size: 13px; color: #6b7280;">未连接</span>
+        </div>
+        <div id="active-users" style="margin-bottom: 16px;">
+            <p style="font-size: 13px; color: #6b7280;">当前在线用户:</p>
+            <div id="users-list" style="display: flex; gap: 8px; flex-wrap: wrap;"></div>
+        </div>
+        <div id="realtime-updates" style="max-height: 200px; overflow-y: auto; font-size: 13px;"></div>
+    </div>
+</div>
+
+<div style="margin-top: 20px;">
+    <a href="/entries" class="btn btn-secondary">← 返回列表</a>
+</div>
+
+{% block extra_js %}
+<script>
+// Real-time collaboration
+const entryId = '{{ entry.id }}';
+const username = prompt('请输入您的用户名:', 'user_' + Math.floor(Math.random() * 1000)) || 'anonymous';
+const sessionId = 'sess_' + Math.random().toString(36).substr(2, 9);
+
+let ws = null;
+let reconnectAttempts = 0;
+const maxReconnectAttempts = 5;
+
+function connectWebSocket() {
+    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const wsUrl = `${protocol}//${window.location.host}/ws/entries/${entryId}?username=${encodeURIComponent(username)}&session_id=${sessionId}`;
+
+    ws = new WebSocket(wsUrl);
+
+    ws.onopen = function() {
+        console.log('WebSocket connected');
+        document.getElementById('connection-status').textContent = '已连接';
+        document.getElementById('connection-status').style.color = '#16a34a';
+        reconnectAttempts = 0;
+
+        // Request presence list
+        ws.send(JSON.stringify({type: 'get_presence'}));
+    };
+
+    ws.onmessage = function(event) {
+        const message = JSON.parse(event.data);
+        handleMessage(message);
+    };
+
+    ws.onclose = function() {
+        console.log('WebSocket disconnected');
+        document.getElementById('connection-status').textContent = '已断开';
+        document.getElementById('connection-status').style.color = '#dc2626';
+
+        // Attempt to reconnect
+        if (reconnectAttempts < maxReconnectAttempts) {
+            reconnectAttempts++;
+            setTimeout(connectWebSocket, 3000);
+        }
+    };
+
+    ws.onerror = function(error) {
+        console.error('WebSocket error:', error);
+    };
+}
+
+function handleMessage(message) {
+    const updatesDiv = document.getElementById('realtime-updates');
+
+    switch(message.type) {
+        case 'presence':
+            if (message.data.status === 'online') {
+                addUpdate(`${message.username} 加入编辑`);
+            } else {
+                addUpdate(`${message.username} 离开编辑`);
+            }
+            break;
+
+        case 'presence_list':
+            updateUsersList(message.users);
+            break;
+
+        case 'edit_start':
+            addUpdate(`${message.username} 开始编辑`);
+            break;
+
+        case 'edit_end':
+            addUpdate(`${message.username} 结束编辑`);
+            break;
+
+        case 'entry_update':
+            addUpdate(`${message.edited_by} 更新了条目 (版本 ${message.version})`);
+            // Optionally reload the page or update specific fields
+            if (confirm('条目已被更新，是否刷新查看最新内容？')) {
+                window.location.reload();
+            }
+            break;
+
+        case 'conflict':
+            alert(`冲突警告！当前版本: ${message.current_version}，您的版本已过期。请刷新页面。`);
+            break;
+    }
+}
+
+function addUpdate(text) {
+    const updatesDiv = document.getElementById('realtime-updates');
+    const time = new Date().toLocaleTimeString();
+    const div = document.createElement('div');
+    div.style.cssText = 'padding: 4px 0; border-bottom: 1px solid #e5e7eb;';
+    div.textContent = `[${time}] ${text}`;
+    updatesDiv.insertBefore(div, updatesDiv.firstChild);
+}
+
+function updateUsersList(users) {
+    const usersList = document.getElementById('users-list');
+    usersList.innerHTML = '';
+    users.forEach(user => {
+        const span = document.createElement('span');
+        span.style.cssText = 'background: #dbeafe; color: #1e40af; padding: 4px 8px; border-radius: 12px; font-size: 12px;';
+        span.textContent = user.username;
+        usersList.appendChild(span);
+    });
+}
+
+// Heartbeat to keep session alive
+setInterval(function() {
+    if (ws && ws.readyState === WebSocket.OPEN) {
+        ws.send(JSON.stringify({type: 'heartbeat'}));
+    }
+}, 30000);
+
+// Connect on page load
+connectWebSocket();
+
+// Cleanup on page unload
+window.addEventListener('beforeunload', function() {
+    if (ws) {
+        ws.close();
+    }
+});
+</script>
+{% endblock %}
+{% endblock %}

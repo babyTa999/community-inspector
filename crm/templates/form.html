@@ -1,0 +1,207 @@
+{% extends "base.html" %}
+
+{% block title %}{% if is_edit %}编辑条目{% else %}新建条目{% endif %} - IceWhale CRM{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h1 class="card-title">{% if is_edit %}✏️ 编辑条目{% else %}➕ 新建条目{% endif %}</h1>
+    </div>
+
+    <form method="post" action="{% if is_edit %}/entries/{{ entry.id }}{% else %}/entries{% endif %}" enctype="multipart/form-data">
+        <div class="form-group">
+            <label class="form-label" for="title">问题/需求描述 *</label>
+            <input type="text" class="form-control" id="title" name="title" value="{{ entry.title if entry else '' }}" required maxlength="500">
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="analysis_todo">分析和 todo</label>
+            <textarea class="form-control" id="analysis_todo" name="analysis_todo" maxlength="10000">{{ entry.analysis_todo if entry else '' }}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="community_todo">社区 todo</label>
+            <textarea class="form-control" id="community_todo" name="community_todo" maxlength="10000">{{ entry.community_todo if entry else '' }}</textarea>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label" for="type_tag">类型标签</label>
+                <select class="form-control" id="type_tag" name="type_tag">
+                    {% for type_opt in filter_options.type_tags %}
+                    <option value="{{ type_opt.value }}" {% if entry and entry.type_tag == type_opt.value %}selected{% elif not entry and type_opt.value == 'S' %}selected{% endif %}>
+                        {{ type_opt.label }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="status_tag">状态标签</label>
+                <select class="form-control" id="status_tag" name="status_tag">
+                    {% for status_opt in filter_options.status_tags %}
+                    <option value="{{ status_opt.value }}" {% if entry and entry.status_tag == status_opt.value %}selected{% elif not entry and status_opt.value == '已定位/知晓' %}selected{% endif %}>
+                        {{ status_opt.label }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label" for="feature_module">功能模块</label>
+                <select class="form-control" id="feature_module" name="feature_module">
+                    <option value="">-- 选择模块 --</option>
+                    {% for module_opt in filter_options.feature_modules %}
+                    <option value="{{ module_opt.value }}" {% if entry and entry.feature_module == module_opt.value %}selected{% endif %}>
+                        {{ module_opt.label }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="user_name">用户名字</label>
+                <input type="text" class="form-control" id="user_name" name="user_name" value="{{ entry.user_name if entry else '' }}" placeholder="例如: gelbuilding" maxlength="100">
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label" for="assignee">相关人员</label>
+                <input type="text" class="form-control" id="assignee" name="assignee" value="{{ entry.assignee if entry else '' }}" placeholder="例如: @Rally" maxlength="100">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="volume">声量</label>
+                <input type="number" class="form-control" id="volume" name="volume" value="{{ entry.volume if entry else 1 }}" min="0">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="source_url">来源链接</label>
+            <input type="url" class="form-control" id="source_url" name="source_url" value="{{ entry.source_url if entry else '' }}" placeholder="https://..." maxlength="1000">
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="knowledge_base_url">知识库链接</label>
+            <input type="url" class="form-control" id="knowledge_base_url" name="knowledge_base_url" value="{{ entry.knowledge_base_url if entry else '' }}" placeholder="https://wiki..." maxlength="1000">
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="github_issue_url">GitHub Issue 链接</label>
+            <input type="url" class="form-control" id="github_issue_url" name="github_issue_url" value="{{ entry.github_issue_url if entry else '' }}" placeholder="https://github.com/..." maxlength="1000">
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="parent_record">父记录</label>
+            <input type="text" class="form-control" id="parent_record" name="parent_record" value="{{ entry.parent_record if entry else '' }}" maxlength="500">
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="notes">备注</label>
+            <textarea class="form-control" id="notes" name="notes" maxlength="5000">{{ entry.notes if entry else '' }}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="source_type">来源类型</label>
+            <input type="text" class="form-control" id="source_type" name="source_type" value="{{ entry.source_type if entry else '' }}" placeholder="Discord/Forum/私信/邮件" maxlength="50">
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">附件图片</label>
+            {% if is_edit and entry.attachments %}
+            <div style="margin-bottom: 12px; padding: 12px; background: #f9fafb; border-radius: 8px;">
+                <p style="font-size: 13px; color: #6b7280; margin-bottom: 8px;">已有附件（保留的会保留，新上传的会追加）：</p>
+                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                    {% for attachment in entry.attachments %}
+                    <div class="attachment-preview">
+                        <img src="{{ attachment }}" alt="attachment" style="width: 80px; height: 80px; object-fit: cover; border-radius: 4px;">
+                    </div>
+                    {% endfor %}
+                </div>
+                <textarea name="existing_attachments" style="display: none;">{{ '\n'.join(entry.attachments) }}</textarea>
+            </div>
+            {% endif %}
+            <input type="file" class="form-control" id="files" name="files" multiple accept="image/*">
+            <p style="font-size: 12px; color: #6b7280; margin-top: 4px;">支持多选图片 (jpg, png, gif, webp)</p>
+        </div>
+
+        <div style="display: flex; gap: 12px; margin-top: 24px;">
+            <button type="submit" class="btn btn-primary" id="submit-btn">
+                {% if is_edit %}保存修改{% else %}创建条目{% endif %}
+            </button>
+            <a href="{% if entry %}/entries/{{ entry.id }}{% else %}/entries{% endif %}" class="btn btn-secondary">取消</a>
+            {% if is_edit %}
+            <span id="version-info" style="font-size: 13px; color: #6b7280; margin-left: auto; align-self: center;">
+                版本: {{ entry.version }}
+                {% if entry.last_edited_by %}(最后编辑: {{ entry.last_edited_by }}){% endif %}
+            </span>
+            {% endif %}
+        </div>
+
+        {% if is_edit %}
+        <input type="hidden" name="version" id="version-input" value="{{ entry.version }}">
+        <input type="hidden" name="edited_by" id="edited-by-input" value="">
+        {% endif %}
+    </form>
+</div>
+
+{% if is_edit %}
+{% block extra_js %}
+<script>
+// Set edited_by field
+const username = prompt('请输入您的用户名:', 'user_' + Math.floor(Math.random() * 1000)) || 'anonymous';
+document.getElementById('edited-by-input').value = username;
+
+// Real-time collaboration via WebSocket
+const entryId = '{{ entry.id }}';
+const sessionId = 'sess_' + Math.random().toString(36).substr(2, 9);
+let ws = null;
+
+function connectWebSocket() {
+    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const wsUrl = `${protocol}//${window.location.host}/ws/entries/${entryId}?username=${encodeURIComponent(username)}&session_id=${sessionId}`;
+
+    ws = new WebSocket(wsUrl);
+
+    ws.onopen = function() {
+        console.log('WebSocket connected');
+        // Notify others that we started editing
+        ws.send(JSON.stringify({type: 'edit_start'}));
+    };
+
+    ws.onmessage = function(event) {
+        const message = JSON.parse(event.data);
+        if (message.type === 'conflict') {
+            alert('冲突警告: 此条目已被其他人修改。请刷新页面获取最新版本。');
+        }
+    };
+
+    ws.onclose = function() {
+        console.log('WebSocket disconnected');
+    };
+}
+
+// Connect on page load
+connectWebSocket();
+
+// Send edit_end when leaving page
+window.addEventListener('beforeunload', function() {
+    if (ws && ws.readyState === WebSocket.OPEN) {
+        ws.send(JSON.stringify({type: 'edit_end'}));
+        ws.close();
+    }
+});
+
+// Heartbeat
+setInterval(function() {
+    if (ws && ws.readyState === WebSocket.OPEN) {
+        ws.send(JSON.stringify({type: 'heartbeat'}));
+    }
+}, 30000);
+</script>
+{% endblock %}
+{% endif %}
+{% endblock %}

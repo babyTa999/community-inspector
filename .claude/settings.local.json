@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python:*)",
+      "Bash(git:*)",
+      "Bash(ruff --version)",
+      "Bash(mypy --version)",
+      "Bash(black --version)"
+    ]
+  }
+}
