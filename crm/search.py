@@ -17,10 +17,17 @@ except ImportError:
 def apply_filters(query: Query, filters: EntryFilterParams) -> Query:
     """Apply filter parameters to query."""
 
-    # Text search in title
+    # FIX: full-text search now covers title, analysis_todo, notes, and community_todo
     if filters.q:
         search_term = f"%{filters.q}%"
-        query = query.filter(CRMEntry.title.ilike(search_term))
+        query = query.filter(
+            or_(
+                CRMEntry.title.ilike(search_term),
+                CRMEntry.analysis_todo.ilike(search_term),
+                CRMEntry.notes.ilike(search_term),
+                CRMEntry.community_todo.ilike(search_term),
+            )
+        )
 
     # Type tag filter (R/Q/S/Tips)
     if filters.type_tag:

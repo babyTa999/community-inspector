@@ -102,8 +102,11 @@ def _split_existing_attachments(raw_attachments: str | None) -> list[str]:
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Application lifespan handler."""
-    # Startup
-    from crm.database import get_engine, init_db
+    # FIX: use try/except for import compatibility (package vs direct run)
+    try:
+        from crm.database import get_engine, init_db
+    except ImportError:
+        from database import get_engine, init_db
 
     engine = get_engine()
     init_db(engine)
@@ -245,6 +248,20 @@ async def create_entry(
 
     entry = crud.create_entry(db, entry_create, created_by=created_by)
     return RedirectResponse(url=f"/entries/{entry.id}", status_code=303)
+
+
+# FIX: batch-delete must be registered BEFORE /{entry_id} routes to avoid route conflict
+@app.post("/entries/batch-delete")
+async def batch_delete_entries(
+    request: Request,
+    entry_ids: str = Form(...),
+    db: Session = Depends(get_db),
+):
+    """Batch delete entries."""
+    ids = [id.strip() for id in entry_ids.split(",") if id.strip()]
+    deleted_count = crud.delete_entries_batch(db, ids)
+
+    return RedirectResponse(url="/entries", status_code=303)
 
 
 @app.get("/entries/{entry_id}", response_class=HTMLResponse)
@@ -404,19 +421,6 @@ async def delete_entry(entry_id: str, db: Session = Depends(get_db)):
     success = crud.delete_entry(db, entry_id)
     if not success:
         raise HTTPException(status_code=404, detail="Entry not found")
-
-    return RedirectResponse(url="/entries", status_code=303)
-
-
-@app.post("/entries/batch-delete")
-async def batch_delete_entries(
-    request: Request,
-    entry_ids: str = Form(...),
-    db: Session = Depends(get_db),
-):
-    """Batch delete entries."""
-    ids = [id.strip() for id in entry_ids.split(",") if id.strip()]
-    deleted_count = crud.delete_entries_batch(db, ids)
 
     return RedirectResponse(url="/entries", status_code=303)
 

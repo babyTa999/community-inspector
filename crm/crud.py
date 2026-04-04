@@ -1,7 +1,7 @@
 """CRUD operations for CRM entries."""
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from typing import Any
 
 from sqlalchemy.orm import Session
@@ -52,9 +52,6 @@ def get_entry(db: Session, entry_id: str) -> CRMEntry | None:
 
 def get_entry_with_lock(db: Session, entry_id: str) -> CRMEntry | None:
     """Get entry with pessimistic locking (for edit sessions)."""
-    from sqlalchemy import text
-
-    # Use SELECT FOR UPDATE to lock the row
     return (
         db.query(CRMEntry)
         .filter(CRMEntry.id == entry_id)
@@ -246,7 +243,8 @@ def start_edit_session(
     # Claim the edit session
     db_entry.is_being_edited = True
     db_entry.edited_by_session = session_id
-    db_entry.edit_session_expires = datetime.now(timezone.utc) + __import__("datetime").timedelta(minutes=expires_minutes)
+    # FIX: use timedelta directly instead of __import__("datetime").timedelta
+    db_entry.edit_session_expires = datetime.now(timezone.utc) + timedelta(minutes=expires_minutes)
 
     db.commit()
     db.refresh(db_entry)
@@ -275,7 +273,8 @@ def extend_edit_session(db: Session, entry_id: str, session_id: str, expires_min
     if not db_entry or db_entry.edited_by_session != session_id:
         return False
 
-    db_entry.edit_session_expires = datetime.now(timezone.utc) + __import__("datetime").timedelta(minutes=expires_minutes)
+    # FIX: use timedelta directly instead of __import__("datetime").timedelta
+    db_entry.edit_session_expires = datetime.now(timezone.utc) + timedelta(minutes=expires_minutes)
     db.commit()
     return True
 
