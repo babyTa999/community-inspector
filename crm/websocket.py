@@ -111,8 +111,11 @@ class ConnectionManager:
         if entry_id not in self.entry_connections:
             return
 
+        # FIX: iterate over a snapshot copy to avoid RuntimeError on concurrent dict modification
+        connections = set(self.entry_connections.get(entry_id, set()))
+
         disconnected = []
-        for websocket in self.entry_connections[entry_id]:
+        for websocket in connections:
             if websocket == exclude:
                 continue
             try:
@@ -126,7 +129,8 @@ class ConnectionManager:
 
     async def send_to_session(self, session_id: str, message: dict):
         """Send a message to a specific session."""
-        for websocket, info in self.connection_info.items():
+        # FIX: iterate over a snapshot copy to avoid concurrent modification issues
+        for websocket, info in list(self.connection_info.items()):
             if info["session_id"] == session_id:
                 try:
                     await websocket.send_json(message)
@@ -281,7 +285,8 @@ async def broadcast_entry_update(
     }
 
     if entry_id in manager.entry_connections:
-        for websocket in manager.entry_connections[entry_id]:
+        # FIX: iterate over a snapshot copy
+        for websocket in set(manager.entry_connections[entry_id]):
             info = manager.connection_info.get(websocket)
             if info and info.get("session_id") == exclude_session:
                 continue

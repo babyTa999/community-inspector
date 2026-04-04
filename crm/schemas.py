@@ -1,7 +1,7 @@
 """Pydantic schemas for CRM."""
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Any
 
 from pydantic import BaseModel, ConfigDict, Field
@@ -139,7 +139,7 @@ class EntryFilterParams(BaseModel):
 
     model_config = ConfigDict(str_strip_whitespace=True)
 
-    q: str | None = Field(default=None, description="Search in title")
+    q: str | None = Field(default=None, description="Search in title, notes, analysis_todo, community_todo")
     type_tag: str | None = Field(default=None, description="R/Q/S/Tips type filter")
     status_tag: str | None = Field(default=None, description="Status filter")
     feature_module: str | None = Field(default=None, description="Feature module filter")
@@ -192,7 +192,8 @@ class RealTimeMessage(BaseModel):
     entry_id: str | None = Field(default=None)
     username: str
     session_id: str
-    timestamp: datetime = Field(default_factory=datetime.utcnow)
+    # FIX: use timezone-aware datetime.now() instead of deprecated datetime.utcnow()
+    timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     data: dict | None = Field(default=None)
 
 
