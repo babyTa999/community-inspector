@@ -1,41 +1,4 @@
-# Database files - do not commit real data
-crm.db
-crm.db-shm
-crm.db-wal
-*.db
-*.db-shm
-*.db-wal
-
-# Python cache
 __pycache__/
 *.py[cod]
-*$py.class
-*.pyc
-*.pyo
-
-# Virtual environments
-venv/
-.venv/
-env/
 .env
-
-# Environment config (keep .env.example)
-.env
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Uploads (user data, not code)
-crm/static/uploads/
-
-# Pytest
-.pytest_cache/
-.coverage
-htmlcov/
+data/

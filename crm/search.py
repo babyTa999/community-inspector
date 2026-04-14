@@ -6,30 +6,24 @@ from datetime import datetime
 from sqlalchemy import or_
 from sqlalchemy.orm import Query, Session
 
-try:
-    from crm.models import CRMEntry
-    from crm.schemas import EntryFilterParams
-except ImportError:
-    from models import CRMEntry
-    from schemas import EntryFilterParams
+from crm.models import CRMEntry
+from crm.schemas import EntryFilterParams
 
 
 def apply_filters(query: Query, filters: EntryFilterParams) -> Query:
     """Apply filter parameters to query."""
 
-    # FIX: full-text search now covers title, analysis_todo, notes, and community_todo
+    # Text search in title and description
     if filters.q:
         search_term = f"%{filters.q}%"
         query = query.filter(
             or_(
                 CRMEntry.title.ilike(search_term),
-                CRMEntry.analysis_todo.ilike(search_term),
-                CRMEntry.notes.ilike(search_term),
-                CRMEntry.community_todo.ilike(search_term),
+                CRMEntry.description.ilike(search_term),
             )
         )
 
-    # Type tag filter (R/Q/S/Tips)
+    # Type tag filter (R/Q/S)
     if filters.type_tag:
         query = query.filter(CRMEntry.type_tag == filters.type_tag)
 
@@ -37,34 +31,31 @@ def apply_filters(query: Query, filters: EntryFilterParams) -> Query:
     if filters.status_tag:
         query = query.filter(CRMEntry.status_tag == filters.status_tag)
 
-    # Feature module filter
-    if filters.feature_module:
-        query = query.filter(CRMEntry.feature_module == filters.feature_module)
+    # Product filter
+    if filters.product:
+        query = query.filter(CRMEntry.product == filters.product)
+
+    # Module filter
+    if filters.module:
+        query = query.filter(CRMEntry.module == filters.module)
+
+    # Version filter
+    if filters.version:
+        query = query.filter(CRMEntry.version.ilike(f"%{filters.version}%"))
 
     # Assignee filter
     if filters.assignee:
         query = query.filter(CRMEntry.assignee.ilike(f"%{filters.assignee}%"))
 
-    # User name filter
-    if filters.user_name:
-        query = query.filter(CRMEntry.user_name.ilike(f"%{filters.user_name}%"))
+    # User ID filter
+    if filters.user_id:
+        query = query.filter(CRMEntry.user_id.ilike(f"%{filters.user_id}%"))
 
     # Date range filters
     if filters.date_from:
-        try:
-            date_from = datetime.strptime(filters.date_from, "%Y-%m-%d")
-            query = query.filter(CRMEntry.created_at >= date_from)
-        except ValueError:
-            pass
-
+        query = query.filter(CRMEntry.created_at >= filters.date_from)
     if filters.date_to:
-        try:
-            date_to = datetime.strptime(filters.date_to, "%Y-%m-%d")
-            # Set to end of day
-            date_to = date_to.replace(hour=23, minute=59, second=59)
-            query = query.filter(CRMEntry.created_at <= date_to)
-        except ValueError:
-            pass
+        query = query.filter(CRMEntry.created_at <= filters.date_to)
 
     return query
 
@@ -113,10 +104,7 @@ def get_distinct_values(db: Session, column: str) -> list[str]:
 
 def get_filter_options(db: Session) -> dict:
     """Get all filter options for dropdowns."""
-    try:
-        from crm.models import FeatureModule, StatusTag, TypeTag
-    except ImportError:
-        from models import FeatureModule, StatusTag, TypeTag
+    from crm.models import Module, Product, StatusTag, TypeTag
 
     return {
         "type_tags": [
@@ -124,25 +112,40 @@ def get_filter_options(db: Session) -> dict:
             for t in TypeTag
         ],
         "status_tags": [
-            {"value": s.value, "label": s.value}
+            {"value": s.value, "label": _get_status_label(s.value)}
             for s in StatusTag
         ],
-        "feature_modules": [
-            {"value": m.value, "label": m.value}
-            for m in FeatureModule
-        ],
+        "products": [{"value": p.value, "label": p.value} for p in Product],
+        "modules": [{"value": m.value, "label": m.value} for m in Module],
         # Dynamic values from database
+        "versions": get_distinct_values(db, "version"),
         "assignees": get_distinct_values(db, "assignee"),
-        "users": get_distinct_values(db, "user_name"),
+        "users": get_distinct_values(db, "user_id"),
     }
 
 
 def _get_type_label(value: str) -> str:
     """Get human-readable label for type tag."""
     labels = {
-        "R": "R - 需求 (Request)",
-        "Q": "Q - 问题 (Question)",
-        "S": "S - 信号 (Signal)",
-        "Tips": "Tips - 技巧/教程",
+        "R": "R - Request (功能请求)",
+        "Q": "Q - Question (问题/Bug)",
+        "S": "S - Signal (趋势/洞察)",
+    }
+    return labels.get(value, value)
+
+
+def _get_status_label(value: str) -> str:
+    """Get human-readable label for status tag."""
+    labels = {
+        "identified": "已定位/知晓",
+        "evaluating": "判断中",
+        "pending_fix": "待修复",
+        "fixing": "修复中",
+        "fixed": "已修复",
+        "pending_reply": "待回复",
+        "replied": "已回复",
+        "user_pending": "User待回复",
+        "user_responded": "User已反馈",
+        "transferred_hardware": "转硬件",
     }
     return labels.get(value, value)

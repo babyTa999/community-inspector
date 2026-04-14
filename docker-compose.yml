@@ -1,88 +1,18 @@
-version: '3.8'
-
 services:
-  # CRM 主应用
-  crm:
+  discord-inspector:
     build:
-      context: ./app
+      context: .
       dockerfile: Dockerfile
-    container_name: icewhale-crm
-    ports:
-      - "8080:8080"
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    env_file:
+      - .env
     volumes:
-      - ./data:/app/data
-      - ./data/crm.db:/app/crm.db
-    environment:
-      - DATABASE_URL=sqlite:///app/crm.db
-      - QDRANT_URL=http://qdrant:6333
-      - OLLAMA_URL=http://ollama:11434
-      - AI_MODE=local  # local / api / hybrid
-      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
-    depends_on:
-      - qdrant
-      - ollama
-    restart: unless-stopped
-    networks:
-      - crm-network
-
-  # Ollama - 本地 AI 模型
-  ollama:
-    image: ollama/ollama:latest
-    container_name: icewhale-ollama
-    ports:
-      - "11434:11434"
-    volumes:
-      - ./data/ollama:/root/.ollama
-    restart: unless-stopped
-    networks:
-      - crm-network
-    # 预拉取模型
-    entrypoint: >
-      sh -c "
-        ollama serve &
-        sleep 5
-        ollama pull deepseek-coder:6.7b
-        ollama pull nomic-embed-text
-        wait
-      "
-
-  # Qdrant - 向量数据库
-  qdrant:
-    image: qdrant/qdrant:latest
-    container_name: icewhale-qdrant
-    ports:
-      - "6333:6333"
-      - "6334:6334"
-    volumes:
-      - ./data/qdrant:/qdrant/storage
-    environment:
-      - QDRANT__SERVICE__HTTP_PORT=6333
-      - QDRANT__SERVICE__GRPC_PORT=6334
-    restart: unless-stopped
-    networks:
-      - crm-network
-
-  # n8n - 工作流自动化
-  n8n:
-    image: n8nio/n8n:latest
-    container_name: icewhale-n8n
-    ports:
-      - "5678:5678"
-    volumes:
-      - ./data/n8n:/home/node/.n8n
-    environment:
-      - N8N_BASIC_AUTH_ACTIVE=true
-      - N8N_BASIC_AUTH_USER=${N8N_USER:-admin}
-      - N8N_BASIC_AUTH_PASSWORD=${N8N_PASSWORD:-icewhale123}
-      - N8N_HOST=${N8N_HOST:-localhost}
-      - N8N_PORT=5678
-      - N8N_PROTOCOL=http
-      - WEBHOOK_URL=http://${N8N_HOST:-localhost}:5678/
-      - GENERIC_TIMEZONE=Asia/Shanghai
-    restart: unless-stopped
-    networks:
-      - crm-network
-
-networks:
-  crm-network:
-    driver: bridge
+      - ./data:/data
+      - ./bot.py:/app/bot.py
+      - ./classifier.py:/app/classifier.py
+      - ./dedup.py:/app/dedup.py
+      - ./formatter.py:/app/formatter.py
+      - ./scheduler.py:/app/scheduler.py
+    restart: always
