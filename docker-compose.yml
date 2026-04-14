@@ -1,5 +1,5 @@
 services:
-  discord-inspector:
+  forum-inspector:
     build:
       context: .
       dockerfile: Dockerfile

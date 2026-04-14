@@ -75,6 +75,8 @@ class CommunityInspectorBotTests(unittest.TestCase):
                 "RUN_ON_STARTUP",
                 "FORUM_ENABLED",
                 "FORUM_BASE_URL",
+                "OUTPUT_TYPE",
+                "FEISHU_WEBHOOK_URL",
             }
         }
         os.environ.update(
@@ -93,6 +95,8 @@ class CommunityInspectorBotTests(unittest.TestCase):
                 "RUN_ON_STARTUP": "false",
                 "FORUM_ENABLED": "false",
                 "FORUM_BASE_URL": "https://community.example.com",
+                "OUTPUT_TYPE": "discord",
+                "FEISHU_WEBHOOK_URL": "",
             }
         )
 

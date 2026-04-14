@@ -33,19 +33,14 @@ REQUIRED_ENV_VARS = (
     "MODEL_NAME",
     "GUILD_ID",
     "OUTPUT_CHANNEL_ID",
-    "OUTPUT_TYPE",
 )
 OPTIONAL_ENV_DEFAULTS = {
-    "INCLUDE_CHANNEL_IDS": "",
-    "EXCLUDE_CHANNEL_IDS": "",
     "DIGEST_TIMEZONE": "Asia/Shanghai",
     "DIGEST_SCHEDULE_HOURS": "10,12,14,16,18,20",
     "DRY_RUN": "false",
     "RUN_ON_STARTUP": "false",
-    "FORUM_ENABLED": "false",
+    "FORUM_ENABLED": "true",
     "FORUM_BASE_URL": "https://community.example.com",
-    "DCMIRROR_CHANNEL_ID": "",
-    "FEISHU_WEBHOOK_URL": "",
 }
 
 
@@ -87,15 +82,10 @@ class CommunityInspectorBot(discord.Client):
         )
         self.guild_id = int(self.config["GUILD_ID"])
         self.output_channel_id = int(self.config["OUTPUT_CHANNEL_ID"])
-        self.include_channel_ids = self._parse_channel_ids(self.config["INCLUDE_CHANNEL_IDS"])
-        self.exclude_channel_ids = self._parse_channel_ids(self.config["EXCLUDE_CHANNEL_IDS"])
         self.dry_run = self._parse_bool(self.config["DRY_RUN"])
         self.run_on_startup = self._parse_bool(self.config["RUN_ON_STARTUP"])
         self.forum_enabled = self._parse_bool(self.config["FORUM_ENABLED"])
         self.forum_base_url = self.config["FORUM_BASE_URL"].rstrip("/")
-        self.dcmirror_channel_id = self.config["DCMIRROR_CHANNEL_ID"].strip()
-        self.output_type = self.config["OUTPUT_TYPE"].strip().lower()
-        self.feishu_webhook_url = self.config["FEISHU_WEBHOOK_URL"].strip()
         self._run_lock = asyncio.Lock()
         self._startup_task: asyncio.Task[None] | None = None
 
@@ -174,7 +164,7 @@ class CommunityInspectorBot(discord.Client):
             chunks = render_digest_chunks(items, digest_time)
 
             try:
-                await self._send_output(chunks)
+                await self._send_to_discord(chunks)
             except Exception:
                 logger.exception("Failed to send digest output")
                 raise
@@ -205,94 +195,13 @@ class CommunityInspectorBot(discord.Client):
             )
 
     async def _collect_source_messages(self) -> list[SourceMessage]:
-        discord_sources, forum_sources = await asyncio.gather(
-            self._collect_discord_source_messages(),
-            self._collect_forum_source_messages(),
-            return_exceptions=True,
-        )
-        if isinstance(discord_sources, BaseException):
-            raise discord_sources
-        if isinstance(forum_sources, asyncio.CancelledError):
-            raise forum_sources
-        if isinstance(forum_sources, Exception):
-            logger.error("Forum source collection failed; continuing with Discord only", exc_info=forum_sources)
-            forum_sources = []
-        return [*discord_sources, *forum_sources]
-
-    async def _collect_discord_source_messages(self) -> list[SourceMessage]:
-        guild = self.get_guild(self.guild_id)
-        if guild is None:
-            raise RuntimeError(f"Guild {self.guild_id} is not available")
-
-        window_start = datetime.now(timezone.utc) - timedelta(hours=WINDOW_HOURS)
-        collected: list[SourceMessage] = []
-        scanned_channels: list[str] = []
-
-        for channel in guild.text_channels:
-            if not self._should_scan_channel(channel):
-                continue
-            if not self._can_read_history(channel):
-                continue
-
-            scanned_channels.append(f"#{channel.name}({channel.id})")
-            pending_sources: dict[str, SourceMessage] = {}
-            history = channel.history(after=window_start, oldest_first=True, limit=None)
-            async for message in history:
-                if message.author.bot:
-                    continue
-
-                message_text = self._message_text(message)
-                if message_text == "-" and not message.attachments:
-                    continue
-
-                message_id = str(message.id)
-                if not self.dedup_store.has_sent(message_id):
-                    is_dcmirror = self.dcmirror_channel_id and str(channel.id) == self.dcmirror_channel_id
-                    pending_sources[message_id] = SourceMessage(
-                        message_id=message_id,
-                        channel_name=channel.name,
-                        author_name=message.author.display_name,
-                        author_id=message.author.id,
-                        content=message_text,
-                        followups=[],
-                        message_url=message.jump_url,
-                        created_at_text=self._format_message_time(message.created_at),
-                        has_attachments=bool(message.attachments),
-                        source_type="discord",
-                        source_label="Discord",
-                        source_location=channel.name,
-                        is_dcmirror=is_dcmirror,
-                    )
-
-                replied_message_id = self._get_replied_message_id(message)
-                if replied_message_id is None:
-                    continue
-
-                source = pending_sources.get(replied_message_id)
-                if source is None or message.author.id == source.author_id:
-                    continue
-
-                source.followups.append(
-                    FollowupMessage(
-                        author_name=message.author.display_name,
-                        content=message_text,
-                    )
-                )
-
-            logger.debug(
-                "Scanned channel #%s (%s): candidate_messages=%s",
-                channel.name,
-                channel.id,
-                len(pending_sources),
-            )
-            collected.extend(pending_sources.values())
-
-        logger.info(
-            "Discord scanning complete: scanned=%s channels=%s",
-            len(scanned_channels),
-            ", ".join(scanned_channels) if scanned_channels else "none",
-        )
-        return collected
+        try:
+            return await self._collect_forum_source_messages()
+        except asyncio.CancelledError:
+            raise
+        except Exception:
+            logger.exception("Forum source collection failed")
+            raise
 
     async def _collect_forum_source_messages(self) -> list[SourceMessage]:
         if not self.forum_enabled:
@@ -353,17 +262,6 @@ class CommunityInspectorBot(discord.Client):
                     session, topic_id, slug, author_id
                 )
 
-                # Skip resolved topics (official replied or user said solved)
-                # and mark them in dedup to avoid re-processing
-                if has_official_reply or user_solved:
-                    if not self.dry_run:
-                        self.dedup_store.mark_sent([message_id], batch_id="resolved")
-                    logger.debug(
-                        "Skipping resolved forum topic %s: has_official_reply=%s, user_solved=%s",
-                        topic_id, has_official_reply, user_solved
-                    )
-                    continue
-
                 collected.append(
                     SourceMessage(
                         message_id=message_id,
@@ -379,6 +277,8 @@ class CommunityInspectorBot(discord.Client):
                         source_label="Forum",
                         source_location=location,
                         thread_title=title,
+                        has_reply=bool(followups),
+                        solved=user_solved,
                     )
                 )
 
@@ -423,8 +323,8 @@ class CommunityInspectorBot(discord.Client):
                     original_text=source.content,
                     translated_zh=result.translated_zh,
                     category=result.category,
-                    has_reply=source.has_reply if source.source_type == "discord" else None,
-                    solved=source.solved if source.source_type == "discord" else None,
+                    has_reply=source.has_reply,
+                    solved=source.solved,
                     known_status=result.known_status,
                     known_source=result.known_source,
                     message_url=source.message_url,
@@ -453,14 +353,6 @@ class CommunityInspectorBot(discord.Client):
             raise RuntimeError(f"Output channel {self.output_channel_id} is not a TextChannel")
         return channel
 
-    async def _send_output(self, chunks: list[DigestItem]) -> None:
-        """Send digest chunks to the configured output destination."""
-        if self.output_type == "feishu":
-            await self._send_to_feishu(chunks)
-        else:
-            # Default: Discord
-            await self._send_to_discord(chunks)
-
     async def _send_to_discord(self, chunks: list[DigestItem]) -> None:
         """Send digest chunks to Discord channel."""
         output_channel = await self._resolve_output_channel()
@@ -474,25 +366,6 @@ class CommunityInspectorBot(discord.Client):
             logger.info("Sending digest chunk %s/%s", index, total_chunks)
             await output_channel.send(chunk.text)
 
-    async def _send_to_feishu(self, chunks: list[DigestItem]) -> None:
-        """Send digest chunks to Feishu webhook."""
-        if not self.feishu_webhook_url:
-            raise ValueError("FEISHU_WEBHOOK_URL is not configured")
-
-        async with aiohttp.ClientSession() as session:
-            for chunk in chunks:
-                payload = {
-                    "msg_type": "text",
-                    "content": {
-                        "text": chunk.text,
-                    },
-                }
-                async with session.post(self.feishu_webhook_url, json=payload) as resp:
-                    if resp.status != 200:
-                        text = await resp.text()
-                        raise RuntimeError(f"Feishu webhook failed: {resp.status} {text}")
-                logger.info("Sent digest chunk to Feishu")
-
     def _load_config(self) -> dict[str, str]:
         config = {key: os.getenv(key, "").strip() for key in REQUIRED_ENV_VARS}
         config.update({key: os.getenv(key, default).strip() for key, default in OPTIONAL_ENV_DEFAULTS.items()})
@@ -501,38 +374,6 @@ class CommunityInspectorBot(discord.Client):
             missing_text = ", ".join(missing)
             raise ValueError(f"Missing required environment variables: {missing_text}")
         return config
-
-    def _should_scan_channel(self, channel: discord.TextChannel) -> bool:
-        channel_id = str(channel.id)
-        if self.include_channel_ids and channel_id not in self.include_channel_ids:
-            return False
-        if channel_id in self.exclude_channel_ids:
-            return False
-        return True
-
-    def _can_read_history(self, channel: discord.TextChannel) -> bool:
-        me = channel.guild.me
-        if me is None:
-            return False
-        permissions = channel.permissions_for(me)
-        return permissions.view_channel and permissions.read_message_history
-
-    def _get_replied_message_id(self, message: discord.Message) -> str | None:
-        reference = message.reference
-        if reference is None or reference.message_id is None:
-            return None
-        return str(reference.message_id)
-
-    def _message_text(self, message: discord.Message) -> str:
-        content = message.content.strip()
-        if content:
-            return content
-        if message.attachments:
-            return "[附件]"
-        return "-"
-
-    def _parse_channel_ids(self, raw_value: str) -> set[str]:
-        return {chunk.strip() for chunk in raw_value.split(",") if chunk.strip()}
 
     def _parse_bool(self, raw_value: str) -> bool:
         return raw_value.strip().lower() in {"1", "true", "yes", "on"}
@@ -591,22 +432,16 @@ class CommunityInspectorBot(discord.Client):
         for post in replies:
             if not isinstance(post, dict):
                 continue
-            # Skip self-replies from the original author
             post_user_id = post.get("user_id")
-            if isinstance(post_user_id, int) and post_user_id == author_id:
-                continue
             raw = str(post.get("cooked") or post.get("raw") or "").strip()
-            # strip html tags simply using pre-compiled regex
             text = _HTML_TAG_RE.sub(" ", raw)
             text = self._normalize_forum_text(text)
             if text and text != "-":
                 username = str(post.get("username") or post.get("name") or "forum-user").strip()
                 result.append(FollowupMessage(author_name=username, content=text))
-                # Check for official user reply (case-insensitive)
                 if username.lower() in _OFFICIAL_USERS_LOWER:
                     has_official_reply = True
-                # Check for solved keywords in reply (from non-official users)
-                elif any(kw in text.lower() for kw in solved_keywords):
+                if isinstance(post_user_id, int) and post_user_id == author_id and any(kw in text.lower() for kw in solved_keywords):
                     user_solved = True
         return result, has_official_reply, user_solved
 

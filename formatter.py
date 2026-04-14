@@ -31,7 +31,7 @@ class DigestItem:
     message_url: str = ""
     created_at_text: str = ""
     has_attachments: bool = False
-    source_label: str = "Discord"
+    source_label: str = "Forum"
     thread_title: str = ""
     is_dcmirror: bool = False
 
@@ -134,17 +134,6 @@ def split_for_discord(text: str, limit: int = SAFE_CHUNK_LIMIT) -> list[str]:
 
 
 def _render_item(item: DigestItem) -> list[str]:
-    # dcmirror simplified format: only content + knowledge base
-    if item.is_dcmirror:
-        lines = [
-            f"• {_normalize_text(item.translated_zh)}",
-        ]
-        if item.category == "Problem":
-            knowledge_text = _render_known_status(item.known_status, item.known_source)
-            lines.append(f"知识库：{knowledge_text}")
-        return lines
-
-    # Normal format
     source_prefix = f"[{_normalize_text(item.source_label)}] " if item.source_label else ""
     header = f"• {source_prefix}#{item.channel_name} | {item.author_name}"
     if item.created_at_text:
@@ -153,6 +142,8 @@ def _render_item(item: DigestItem) -> list[str]:
     lines = [
         header,
     ]
+    if item.thread_title:
+        lines.append(f"标题：{_normalize_text(item.thread_title)}")
     lines.append(f"中文：{_normalize_text(item.translated_zh)}")
 
     if item.message_url:
@@ -164,7 +155,7 @@ def _render_item(item: DigestItem) -> list[str]:
         if item.has_reply is not None:
             reply_text = "✅ 有" if item.has_reply else "❌ 无"
             solved_text = "✅ 是" if item.solved else "❌ 否"
-            lines.append(f"是否有人回复他：{reply_text}　　已解决：{solved_text}")
+            lines.append(f"是否有人回复：{reply_text}　　已解决：{solved_text}")
         knowledge_text = _render_known_status(item.known_status, item.known_source)
         lines.append(f"知识库：{knowledge_text}")
 
